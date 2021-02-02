@@ -13,5 +13,10 @@ namespace HoldersManager.Models
         [Required]
         public string Name { get; set; }
         public DateTime CreationDate { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Name}";
+        }
     }
 }

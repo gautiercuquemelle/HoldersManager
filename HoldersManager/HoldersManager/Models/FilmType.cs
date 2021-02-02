@@ -8,5 +8,10 @@ namespace HoldersManager.Models
     public class FilmType : BaseConfigModel
     {
         public int ISO { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Name}  /  {ISO} ISO";
+        }
     }
 }
