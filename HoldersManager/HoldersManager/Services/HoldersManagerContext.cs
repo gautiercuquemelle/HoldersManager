@@ -43,7 +43,10 @@ namespace HoldersManager.Services
             //    .HasKey(b => b.Id);
 
             //modelBuilder.Entity<Holder>()
-            //    .HasKey(b => b.Id);
+            //    .Navigation<HolderType>(p => p.HolderType).AutoInclude(true);
+
+            //modelBuilder.Entity<HolderType>()
+            //    .Navigation<Holder>(p => p.Holders).AutoInclude(false);
         }
 
         async public Task<int> InitializeEmptyDb()

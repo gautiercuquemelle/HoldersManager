@@ -45,13 +45,32 @@ namespace HoldersManager.ViewModels
         public List<HolderType> HolderTypes
         {
             get => _holderTypes;
-            set => SetProperty(ref _holderTypes, value);
+            set =>SetProperty(ref _holderTypes, value);
+        }
+
+        private HolderType _selectedHolderType;
+        public HolderType SelectedHolderType
+        {
+            get => _selectedHolderType;
+            set 
+            {
+                SetProperty(ref _selectedHolderType, value);
+                Holder.HolderTypeId = value != null ? value.Id : 0;
+            }
         }
 
         private void OnSaveHolder()
         {
+            if(SelectedHolderType == null)
+            {
+                Application.Current.MainPage.DisplayAlert("Error", "You must select a holder type", "Ok");
+                return;
+            }            
+
             using (var dbcontext = new HoldersManagerContext())
             {
+                Holder.HolderTypeId = SelectedHolderType.Id;
+
                 if (Holder.Id == 0)
                 {
                     // Add new holder type
@@ -105,7 +124,10 @@ namespace HoldersManager.ViewModels
                 {
                     Holder = new Holder { }; // Creation mode
                 }
-
+                else
+                {
+                    SelectedHolderType = dbcontext.HolderTypes.FirstOrDefault(p => p.Id == Holder.HolderTypeId);
+                }
                 
             }
         }

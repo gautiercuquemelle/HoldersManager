@@ -17,18 +17,18 @@ namespace HoldersManager
 
             using (var dbcontext = new HoldersManagerContext())
             {
-                dbcontext.HolderFilms.RemoveRange(dbcontext.HolderFilms);
-                dbcontext.Holders.RemoveRange(dbcontext.Holders);
-                dbcontext.HolderTypes.RemoveRange(dbcontext.HolderTypes);
-                dbcontext.FilmTypes.RemoveRange(dbcontext.FilmTypes);
-                dbcontext.FilmDevelopments.RemoveRange(dbcontext.FilmDevelopments);
-                dbcontext.Developers.RemoveRange(dbcontext.Developers);
-                dbcontext.FilmExposures.RemoveRange(dbcontext.FilmExposures);
-                dbcontext.ExposureUnits.RemoveRange(dbcontext.ExposureUnits);
-                dbcontext.Cameras.RemoveRange(dbcontext.Cameras);
-                dbcontext.Films.RemoveRange(dbcontext.Films);
+                //dbcontext.HolderFilms.RemoveRange(dbcontext.HolderFilms);
+                //dbcontext.Holders.RemoveRange(dbcontext.Holders);
+                //dbcontext.HolderTypes.RemoveRange(dbcontext.HolderTypes);
+                //dbcontext.FilmTypes.RemoveRange(dbcontext.FilmTypes);
+                //dbcontext.FilmDevelopments.RemoveRange(dbcontext.FilmDevelopments);
+                //dbcontext.Developers.RemoveRange(dbcontext.Developers);
+                //dbcontext.FilmExposures.RemoveRange(dbcontext.FilmExposures);
+                //dbcontext.ExposureUnits.RemoveRange(dbcontext.ExposureUnits);
+                //dbcontext.Cameras.RemoveRange(dbcontext.Cameras);
+                //dbcontext.Films.RemoveRange(dbcontext.Films);
 
-                dbcontext.SaveChangesAsync().Wait();
+                //dbcontext.SaveChangesAsync().Wait();
 
                 var initAsync = dbcontext.InitializeEmptyDb();
                 initAsync.Wait();

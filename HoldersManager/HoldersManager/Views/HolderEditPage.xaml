@@ -5,7 +5,9 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Holder type"/>
-            <Picker Title="Select a holder type" ItemsSource="{Binding HolderTypes}" SelectedItem="{Binding Holder.HolderType, Mode=TwoWay}" ItemDisplayBinding="{Binding Name}"/>
+            <Picker Title="Select a holder type" ItemsSource="{Binding HolderTypes}" 
+                    SelectedItem="{Binding SelectedHolderType, Mode=TwoWay}"                     
+                    ItemDisplayBinding="{Binding Name}"/>
 
             <Label Text="Name"/>
             <Entry Text="{Binding Holder.HolderName, Mode=TwoWay}"/>

@@ -30,7 +30,7 @@ namespace HoldersManager.ViewModels
         public Holder Holder
         {
             get => _holder;
-            set => SetProperty(ref _holder, value);
+            set { SetProperty(ref _holder, value); OnPropertyChanged("HolderType"); }
         }
 
         private HolderType _holderType;
@@ -40,7 +40,7 @@ namespace HoldersManager.ViewModels
             set => SetProperty(ref _holderType, value);
         }
 
-        public ObservableCollection<HolderFilm> HolderFilms { get; set; }
+    public ObservableCollection<HolderFilm> HolderFilms { get; set; }
 
         public HolderDetailViewModel()
         {
@@ -60,6 +60,7 @@ namespace HoldersManager.ViewModels
             using (var dbcontext = new HoldersManagerContext())
             {
                 Holder = dbcontext.Holders.FirstOrDefault(p => p.Id == int.Parse(holderId));
+
                 if (Holder != null)
                 {
                     HolderType = dbcontext.HolderTypes.FirstOrDefault(p => p.Id == Holder.HolderTypeId);
