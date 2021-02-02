@@ -6,6 +6,10 @@
     <StackLayout>
         <!-- Entête-->
         <StackLayout Orientation="Horizontal">
+            <Label Text="Holder type :"></Label>
+            <Label FontAttributes="Bold" Text="{Binding HolderType.Name}"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
             <Label Text="Holder name :"></Label>
             <Label FontAttributes="Bold" Text="{Binding Holder.HolderName}"></Label>
         </StackLayout>
@@ -26,7 +30,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
-            <Button Grid.Column="0" Text="Edit" />
+            <Button Grid.Column="0" Text="Edit" Command="{Binding EditCommand}"/>
             <Button Grid.Column="1" Text="Load"></Button>
             <Button Grid.Column="2" Text="Develoment"></Button>
         </Grid>

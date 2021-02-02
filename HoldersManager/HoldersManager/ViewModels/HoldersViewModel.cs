@@ -80,7 +80,7 @@ namespace HoldersManager.ViewModels
 
         private async void OnAddHolder(object obj)
         {
-            //await Shell.Current.GoToAsync(nameof(NewHolderPage));
+            await Shell.Current.GoToAsync($"{nameof(HolderEditPage)}?{nameof(HolderEditViewModel.HolderId)}=0");
         }
 
         async void OnHolderSelected(Holder holder)
@@ -89,8 +89,7 @@ namespace HoldersManager.ViewModels
                 return;
 
             // This will push the ItemDetailPage onto the navigation stack
-            var state = $"{nameof(HolderDetailPage)}?{nameof(HolderDetailViewModel.HolderId)}={holder.Id}";
-            await Shell.Current.GoToAsync(state);
+            await Shell.Current.GoToAsync($"{nameof(HolderDetailPage)}?{nameof(HolderDetailViewModel.HolderId)}={holder.Id}");
 
             SelectedItem = null;
         }

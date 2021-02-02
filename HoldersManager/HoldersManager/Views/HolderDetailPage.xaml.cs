@@ -13,11 +13,19 @@ namespace HoldersManager.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HolderDetailPage : ContentPage
     {
+        HolderDetailViewModel _viewModel;
         public HolderDetailPage()
         {
             InitializeComponent();
 
-            BindingContext = new HolderDetailViewModel();
-        }       
+            BindingContext = _viewModel = new HolderDetailViewModel();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            _viewModel.RefreshView();
+
+        }
     }
 }

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace HoldersManager.Models
 {
     public class Holder
     {        
+        [Key]
         public int Id { get; set; }
         public int HolderTypeId { get; set; }
         public string HolderName { get; set; }

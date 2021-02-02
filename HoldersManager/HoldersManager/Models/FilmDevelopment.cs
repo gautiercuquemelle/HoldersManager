@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace HoldersManager.Models
 {
     public class FilmDevelopment
     {        
+        [Key]
         public int Id { get; set; }
         public int FilmId { get; set; }
         public int DeveloperId { get; set; }

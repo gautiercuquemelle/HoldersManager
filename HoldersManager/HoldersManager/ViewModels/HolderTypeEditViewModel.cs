@@ -75,7 +75,7 @@ namespace HoldersManager.ViewModels
             {
                 if(dbcontext.Holders.Where(p=>p.HolderTypeId == HolderType.Id).Any())
                 {
-                    Application.Current.MainPage.DisplayAlert("Error", "Cant delete a holder type used on existing holder", "Ok");
+                    Application.Current.MainPage.DisplayAlert("Error", "Can't delete a holder type used on existing holder", "Ok");
                     return;
                 }
 

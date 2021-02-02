@@ -4,26 +4,17 @@
              x:Class="HoldersManager.Views.HoldersPage">
 
     <StackLayout>
-        <Button x:Name="btnAddHolder" Text="New Holder" Command="{Binding AddHolderCommand}"></Button>
+        <Button x:Name="btnAddHolder" Text="New Holder" Command="{Binding AddHolderCommand}" Margin="0,5,0,0"></Button>
         <ListView x:Name="MyListView"
             ItemsSource="{Binding Holders}" 
                   SelectedItem="{Binding SelectedItem, Mode=TwoWay}" RefreshCommand="{Binding LoadItemsCommand}"                
             CachingStrategy="RecycleElement">
-            <!--Built in Cells-->
-            <!--<ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding HolderName}" />
-                    
-                </DataTemplate>
-            </ListView.ItemTemplate>-->
-
-            <!--Custom View Cells-->
-
+   
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout>
-                            <Label Text="{Binding HolderName}" 
+                            <Label Text="{Binding HolderName}"
                             Style="{DynamicResource ListItemTextStyle}" />
                             <Label Text="{Binding Comments}" 
                             Style="{DynamicResource ListItemDetailTextStyle}"/>
