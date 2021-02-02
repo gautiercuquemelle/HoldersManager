@@ -5,28 +5,28 @@
 
 
     <StackLayout>
-        
+
         <Button Grid.Column="1" Text="Add" Command="{Binding AddHolderTypeCommand}" Margin="0,5,0,20"/>
-        
+
         <ListView x:Name="MyListView"
             ItemsSource="{Binding HolderTypes}"
             SelectedItem="{Binding SelectedHolderType, Mode=TwoWay}" 
             IsPullToRefreshEnabled="True"
             RefreshCommand="{Binding LoadItemsCommand}"
             CachingStrategy="RecycleElement">
-  
-    
-    <ListView.ItemTemplate>
-      <DataTemplate>
-        <ViewCell>
-          <StackLayout>
-            <Label Text="{Binding Name}" 
+
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout>
+                            <Label Text="{Binding Name}" 
                    Style="{DynamicResource ListItemTextStyle}" />
-          </StackLayout>
-        </ViewCell>
-      </DataTemplate>
-    </ListView.ItemTemplate>
-    
-  </ListView>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
     </StackLayout>
 </ContentPage>

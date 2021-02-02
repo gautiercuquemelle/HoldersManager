@@ -22,16 +22,9 @@ namespace HoldersManager.ViewModels
             DeleteCommand = new Command(OnDeleteHolderType);
         }
 
-
-        private string _holderTypeId;
         public string HolderTypeId
         {
-            get { return _holderTypeId; }
-            set
-            {
-                _holderTypeId = value;
-                LoadHolderTypeDetails(value);
-            }
+            set => LoadHolderTypeDetails(value);
         }
 
         private HolderType _holderType;
@@ -45,7 +38,7 @@ namespace HoldersManager.ViewModels
         {
             using (var dbcontext = new HoldersManagerContext())
             {
-                if(HolderType.Id == -1)
+                if(HolderType.Id == 0)
                 {
                     // Add new holder type
                     HolderType.CreationDate = DateTime.Now;

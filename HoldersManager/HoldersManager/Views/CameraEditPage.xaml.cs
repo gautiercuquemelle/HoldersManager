@@ -11,21 +11,12 @@ using Xamarin.Forms.Xaml;
 namespace HoldersManager.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CamerasPage : ContentPage
+    public partial class CameraEditPage : ContentPage
     {
-        CamerasViewModel _viewModel;
-
-        public CamerasPage()
+        public CameraEditPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new CamerasViewModel();
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            _viewModel.LoadItemsCommand.Execute(null);
-        }
+            BindingContext = new CameraEditViewModel();            
+        }        
     }
 }

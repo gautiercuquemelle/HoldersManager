@@ -18,15 +18,13 @@ namespace HoldersManager.ViewModels
 
         public ObservableCollection<HolderType> HolderTypes { get; set; }
         public Command LoadItemsCommand { get; }
-        public Command AddHolderTypeCommand { get; }        
-        public Command<HolderType> HolderTypeTapped { get; }
+        public Command AddHolderTypeCommand { get; }
 
         public HolderTypesViewModel()
         {
             Title = "Holder Types";
             HolderTypes = new ObservableCollection<HolderType>();
             LoadItemsCommand = new Command(ExecuteLoadHolderTypesCommand);
-            HolderTypeTapped = new Command<HolderType>(OnHolderTypeSelected);
 
             AddHolderTypeCommand = new Command(OnAddHolderType);
 
@@ -79,7 +77,7 @@ namespace HoldersManager.ViewModels
         private async void OnAddHolderType(object obj)
         {
             //await Shell.Current.GoToAsync(nameof(NewHolderTypePage));
-            await Shell.Current.GoToAsync($"{nameof(HolderTypeEditPage)}?{nameof(HolderTypeEditViewModel.HolderTypeId)}=-1");
+            await Shell.Current.GoToAsync($"{nameof(HolderTypeEditPage)}?{nameof(HolderTypeEditViewModel.HolderTypeId)}=0");
         }
 
         async void OnHolderTypeSelected(HolderType holderType)

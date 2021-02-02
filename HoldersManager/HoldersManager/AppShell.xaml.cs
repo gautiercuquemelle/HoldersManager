@@ -17,6 +17,7 @@ namespace HoldersManager
             Routing.RegisterRoute(nameof(HolderTypeEditPage), typeof(HolderTypeEditPage));
             Routing.RegisterRoute(nameof(FilmTypesPage), typeof(FilmTypesPage));
             Routing.RegisterRoute(nameof(CamerasPage), typeof(CamerasPage));
+            Routing.RegisterRoute(nameof(CameraEditPage), typeof(CameraEditPage));
             Routing.RegisterRoute(nameof(ExposureUnitsPage), typeof(ExposureUnitsPage));
             Routing.RegisterRoute(nameof(DevelopersPage), typeof(DevelopersPage));
 
