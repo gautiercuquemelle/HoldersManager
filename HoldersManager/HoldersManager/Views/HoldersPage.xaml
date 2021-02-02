@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"             
+             x:Class="HoldersManager.Views.HoldersPage">
+
+    <StackLayout>
+        <Button x:Name="btnAddHolder" Text="New Holder" Command="{Binding AddHolderCommand}"></Button>
+        <ListView x:Name="MyListView"
+            ItemsSource="{Binding Holders}" 
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}" RefreshCommand="{Binding LoadItemsCommand}"                
+            CachingStrategy="RecycleElement">
+            <!--Built in Cells-->
+            <!--<ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding HolderName}" />
+                    
+                </DataTemplate>
+            </ListView.ItemTemplate>-->
+
+            <!--Custom View Cells-->
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout>
+                            <Label Text="{Binding HolderName}" 
+                            Style="{DynamicResource ListItemTextStyle}" />
+                            <Label Text="{Binding Comments}" 
+                            Style="{DynamicResource ListItemDetailTextStyle}"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+    </StackLayout>
+
+</ContentPage>

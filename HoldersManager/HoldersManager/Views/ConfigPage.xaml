@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HoldersManager.Views.ConfigPage">
+    <ContentPage.Content>
+        <StackLayout>
+            
+            <Label Text="Holders manager config"
+                HorizontalOptions="CenterAndExpand" FontSize="Large" Margin="0,15" />
+            <Button Text="Holder types" Command="{Binding HolderTypesCommand}"></Button>
+            <Button Text="Film types" Command="{Binding FilmTypesCommand}"></Button>
+            <Button Text="Cameras" Command="{Binding CamerasCommand}"></Button>
+            <Button Text="Exposure units" Command="{Binding ExposureUnitsCommand}"></Button>
+            <Button Text="Developers" Command="{Binding DevelopersCommand}"></Button>            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
