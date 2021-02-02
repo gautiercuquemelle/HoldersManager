@@ -35,14 +35,12 @@ namespace HoldersManager
 
                 Debug.WriteLine($"Elements config créés : {initAsync.Result}");
             }
-
-            DependencyService.Register<MockDataStore>();
+                        
             MainPage = new AppShell();
         }
 
         protected override void OnStart()
-        {
-           
+        {           
         }
 
         protected override void OnSleep()
