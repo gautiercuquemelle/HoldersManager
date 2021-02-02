@@ -5,12 +5,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HoldersManager.Models
 {
-    public class ExposureUnit
+    public class ExposureUnit:BaseConfigModel
     {        
-        [Key]
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public DateTime CreationDate { get; set; }
-
+        
     }
 }

@@ -7,6 +7,9 @@
             <Label Text="Name"/>
             <Entry Text="{Binding FilmType.Name, Mode=TwoWay}"/>
 
+            <Label Text="ISO"/>
+            <Entry Text="{Binding FilmType.ISO, Mode=TwoWay}"/>
+
             <Grid VerticalOptions="End">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>

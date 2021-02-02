@@ -5,11 +5,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HoldersManager.Models
 {
-    public class Developer
+    public class Developer : BaseConfigModel
     {        
-        [Key]
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public DateTime CreationDate { get; set; }
+       
     }
 }

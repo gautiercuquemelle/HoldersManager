@@ -4,11 +4,11 @@
              x:Class="HoldersManager.Views.CamerasPage">
     <StackLayout>
 
-        <Button Grid.Column="1" Text="Add" Command="{Binding AddCameraCommand}" Margin="0,5,0,20"/>
+        <Button Grid.Column="1" Text="Add" Command="{Binding AddItemCommand}" Margin="0,5,0,20"/>
 
         <ListView x:Name="MyListView"
-            ItemsSource="{Binding Cameras}"
-            SelectedItem="{Binding SelectedCamera, Mode=TwoWay}" 
+            ItemsSource="{Binding Items}"
+            SelectedItem="{Binding SelectedItem, Mode=TwoWay}" 
             IsPullToRefreshEnabled="True"
             RefreshCommand="{Binding LoadItemsCommand}"
             CachingStrategy="RecycleElement">
