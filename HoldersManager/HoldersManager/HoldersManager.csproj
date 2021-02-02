@@ -16,12 +16,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Components\ListConfig.xaml.cs">
+      <DependentUpon>ListConfig.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\HoldersPage.xaml.cs">
       <DependentUpon>HoldersPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Components\ListConfig.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\CameraEditPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
