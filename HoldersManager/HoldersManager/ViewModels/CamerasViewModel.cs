@@ -19,7 +19,7 @@ namespace HoldersManager.ViewModels
 
         public CamerasViewModel()
         {
-            Title = "Holder Types";
+            Title = "Cameras";
             Cameras = new ObservableCollection<Camera>();
             LoadItemsCommand = new Command(ExecuteLoadCamerasCommand);
 

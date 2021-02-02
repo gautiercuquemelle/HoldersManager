@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HoldersManager.ViewModels;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -12,33 +13,19 @@ namespace HoldersManager.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FilmTypesPage : ContentPage
     {
-        public ObservableCollection<string> Items { get; set; }
+        FilmTypesViewModel _viewModel;
 
         public FilmTypesPage()
         {
             InitializeComponent();
-
-            Items = new ObservableCollection<string>
-            {
-                "Item 1",
-                "Item 2",
-                "Item 3",
-                "Item 4",
-                "Item 5"
-            };
-
-            MyListView.ItemsSource = Items;
+            BindingContext = _viewModel = new FilmTypesViewModel();
         }
 
-        async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
+        protected override void OnAppearing()
         {
-            if (e.Item == null)
-                return;
+            base.OnAppearing();
 
-            await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
-
-            //Deselect Item
-            ((ListView)sender).SelectedItem = null;
+            _viewModel.LoadItemsCommand.Execute(null);
         }
     }
 }
