@@ -20,7 +20,9 @@ namespace HoldersManager
             Routing.RegisterRoute(nameof(CamerasPage), typeof(CamerasPage));
             Routing.RegisterRoute(nameof(CameraEditPage), typeof(CameraEditPage));
             Routing.RegisterRoute(nameof(ExposureUnitsPage), typeof(ExposureUnitsPage));
-            Routing.RegisterRoute(nameof(DevelopersPage), typeof(DevelopersPage));            
+            Routing.RegisterRoute(nameof(ExposureUnitEditPage), typeof(ExposureUnitEditPage));
+            Routing.RegisterRoute(nameof(DevelopersPage), typeof(DevelopersPage));
+            Routing.RegisterRoute(nameof(DeveloperEditPage), typeof(DeveloperEditPage));
         }
 
     }

@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:cmp="clr-namespace:HoldersManager.Components"
-             x:Class="HoldersManager.Views.DevelopersPage">
-    <cmp:ListConfig/>
+             x:Class="HoldersManager.Views.DeveloperEditPage">
+    <ContentPage.Content>
+        <cmp:EditConfig/>
+    </ContentPage.Content>
 </ContentPage>

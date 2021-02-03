@@ -15,6 +15,9 @@
     <Compile Update="Components\ListConfig.xaml.cs">
       <DependentUpon>ListConfig.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Config\DeveloperEditPage.xaml.cs">
+      <DependentUpon>DeveloperEditPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\HoldersPage.xaml.cs">
       <DependentUpon>HoldersPage.xaml</DependentUpon>
     </Compile>
@@ -36,7 +39,13 @@
     <EmbeddedResource Update="Views\Config\ConfigPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\Config\DeveloperEditPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\Config\DevelopersPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Config\ExposureUnitEditPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Config\ExposureUnitsPage.xaml">
