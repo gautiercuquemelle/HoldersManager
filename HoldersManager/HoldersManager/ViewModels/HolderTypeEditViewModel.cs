@@ -8,88 +8,28 @@ using Xamarin.Forms;
 
 namespace HoldersManager.ViewModels
 {
-    [QueryProperty(nameof(HolderTypeId), nameof(HolderTypeId))]
-    public class HolderTypeEditViewModel : BaseViewModel
+    [QueryProperty(nameof(ItemId), nameof(ItemId))]
+    public class HolderTypeEditViewModel : ConfigEditBaseViewModel<HolderType>
     {
-        public Command CancelCommand { get; }
-        public Command SaveCommand { get; }
-        public Command DeleteCommand { get; }
-
-        public HolderTypeEditViewModel()
-        {
-            CancelCommand = new Command(() => Shell.Current.SendBackButtonPressed());
-            SaveCommand = new Command(OnSaveHolderType);
-            DeleteCommand = new Command(OnDeleteHolderType);
-        }
-
-        public string HolderTypeId
-        {
-            set => LoadHolderTypeDetails(value);
-        }
-
-        private HolderType _holderType;
-        public HolderType HolderType
-        {
-            get => _holderType;
-            set => SetProperty(ref _holderType, value);
-        }
-
-        private void OnSaveHolderType()
+        protected override bool HasDbConstraintErrors(ref string errorMessage)
         {
             using (var dbcontext = new HoldersManagerContext())
             {
-                if(HolderType.Id == 0)
+                if (dbcontext.Holders.Where(p => p.HolderTypeId == Item.Id).Any())
                 {
-                    // Add new holder type
-                    HolderType.CreationDate = DateTime.Now;
-                    dbcontext.HolderTypes.Add(HolderType);                    
+                    errorMessage += "Can't delete a holder type used on existing holder\r\n";
                 }
-                else
-                {
-                    // Update existing holder type
-                    dbcontext.Update(HolderType);
-                }
-
-                dbcontext.SaveChangesAsync().Wait();
             }
 
-            Shell.Current.SendBackButtonPressed();
+            return !string.IsNullOrWhiteSpace(errorMessage);
         }
 
-        private void OnDeleteHolderType()
+        protected override bool HasValidationErrors(ref string errorMessage)
         {
-            if (HolderType.Id == 0) 
-            {
-                Shell.Current.SendBackButtonPressed();
-                return;
-            }
+            if (string.IsNullOrWhiteSpace(Item.Name))
+                errorMessage = "You must specify a name";
 
-            using (var dbcontext = new HoldersManagerContext())
-            {
-                if(dbcontext.Holders.Where(p=>p.HolderTypeId == HolderType.Id).Any())
-                {
-                    Application.Current.MainPage.DisplayAlert("Error", "Can't delete a holder type used on existing holder", "Ok");
-                    return;
-                }
-
-                dbcontext.HolderTypes.Remove(HolderType);
-                dbcontext.SaveChangesAsync().Wait();
-
-                Shell.Current.SendBackButtonPressed();
-            } 
-        }
-
-        private void LoadHolderTypeDetails(string holderTypeId)
-        {
-            using (var dbcontext = new HoldersManagerContext())
-            {
-                HolderType = dbcontext.HolderTypes.FirstOrDefault(p => p.Id == int.Parse(holderTypeId));
-
-                if(HolderType == null)
-                {
-                    HolderType = new HolderType {  }; // Creation mode
-                }
-            }
+            return !string.IsNullOrWhiteSpace(errorMessage);
         }
     }
 }

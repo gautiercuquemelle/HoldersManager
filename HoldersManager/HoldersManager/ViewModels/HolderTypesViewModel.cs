@@ -21,7 +21,7 @@ namespace HoldersManager.ViewModels
 
         protected override string GetNavigationUriToEdit(string id)
         {
-            return $"{nameof(HolderTypeEditPage)}?{nameof(HolderTypeEditViewModel.HolderTypeId)}={id}";
+            return $"{nameof(HolderTypeEditPage)}?{nameof(HolderTypeEditViewModel.ItemId)}={id}";
         }
     }
 }

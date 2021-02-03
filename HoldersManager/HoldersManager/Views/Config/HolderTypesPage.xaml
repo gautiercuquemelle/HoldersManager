@@ -4,6 +4,6 @@
              xmlns:cmp="clr-namespace:HoldersManager.Components"
              x:Class="HoldersManager.Views.HolderTypesPage">
 
-    <cmp:EditConfig/>
+    <cmp:ListConfig/>
     
 </ContentPage>

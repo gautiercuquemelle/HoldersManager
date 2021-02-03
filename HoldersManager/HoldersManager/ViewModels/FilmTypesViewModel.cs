@@ -20,7 +20,7 @@ namespace HoldersManager.ViewModels
 
         protected override string GetNavigationUriToEdit(string id)
         {
-            return $"{nameof(FilmTypeEditPage)}?{nameof(FilmTypeEditViewModel.FilmTypeId)}={id}";
+            return $"{nameof(FilmTypeEditPage)}?{nameof(FilmTypeEditViewModel.ItemId)}={id}";
         }
     }
 }

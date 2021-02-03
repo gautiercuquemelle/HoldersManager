@@ -8,88 +8,28 @@ using Xamarin.Forms;
 
 namespace HoldersManager.ViewModels
 {
-    [QueryProperty(nameof(CameraId), nameof(CameraId))]
-    public class CameraEditViewModel : BaseViewModel
-    {
-        public Command CancelCommand { get; }
-        public Command SaveCommand { get; }
-        public Command DeleteCommand { get; }
-
-        public CameraEditViewModel()
-        {
-            CancelCommand = new Command(() => Shell.Current.SendBackButtonPressed());
-            SaveCommand = new Command(OnSaveCamera);
-            DeleteCommand = new Command(OnDeleteCamera);
-        }
-
-        public string CameraId
-        {
-            set => LoadCameraDetails(value);
-        }
-
-        private Camera _camera;
-        public Camera Camera
-        {
-            get => _camera;
-            set => SetProperty(ref _camera, value);
-        }
-
-        private void OnSaveCamera()
+    [QueryProperty(nameof(ItemId), nameof(ItemId))]
+    public class CameraEditViewModel : ConfigEditBaseViewModel<Camera>
+    {        
+        protected override bool HasDbConstraintErrors(ref string errorMessage)
         {
             using (var dbcontext = new HoldersManagerContext())
             {
-                if (Camera.Id == 0)
+                if (dbcontext.FilmExposures.Where(p => p.CameraId == Item.Id).Any())
                 {
-                    // Add new holder type
-                    Camera.CreationDate = DateTime.Now;
-                    dbcontext.Cameras.Add(Camera);
+                    errorMessage += "Can't delete a camera used on existing film exposure\r\n";                    
                 }
-                else
-                {
-                    // Update existing holder type
-                    dbcontext.Update(Camera);
-                }
-
-                dbcontext.SaveChangesAsync().Wait();
             }
 
-            Shell.Current.SendBackButtonPressed();
+            return !string.IsNullOrWhiteSpace(errorMessage);
         }
 
-        private void OnDeleteCamera()
+        protected override bool HasValidationErrors(ref string errorMessage)
         {
-            if (Camera.Id == 0)
-            {
-                Shell.Current.SendBackButtonPressed();
-                return;
-            }
+            if (string.IsNullOrWhiteSpace(Item.Name))
+                errorMessage = "You must specify a name";
 
-            using (var dbcontext = new HoldersManagerContext())
-            {
-                if (dbcontext.FilmExposures.Where(p => p.CameraId == Camera.Id).Any())
-                {
-                    Application.Current.MainPage.DisplayAlert("Error", "Can't delete a camera used on existing film exposure", "Ok");
-                    return;
-                }
-
-                dbcontext.Cameras.Remove(Camera);
-                dbcontext.SaveChangesAsync().Wait();
-
-                Shell.Current.SendBackButtonPressed();
-            }
-        }
-
-        private void LoadCameraDetails(string cameraId)
-        {
-            using (var dbcontext = new HoldersManagerContext())
-            {
-                Camera = dbcontext.Cameras.FirstOrDefault(p => p.Id == int.Parse(cameraId));
-
-                if (Camera == null)
-                {
-                    Camera = new Camera { }; // Creation mode
-                }
-            }
+            return !string.IsNullOrWhiteSpace(errorMessage);
         }
     }
 }

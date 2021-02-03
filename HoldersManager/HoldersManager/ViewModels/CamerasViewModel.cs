@@ -21,7 +21,7 @@ namespace HoldersManager.ViewModels
 
         protected override string GetNavigationUriToEdit(string id)
         {
-            return $"{nameof(CameraEditPage)}?{nameof(CameraEditViewModel.CameraId)}={id}";
+            return $"{nameof(CameraEditPage)}?{nameof(CameraEditViewModel.ItemId)}={id}";
         }
     }
 }

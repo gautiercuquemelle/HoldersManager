@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace HoldersManager.Components
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ListConfig : ContentView
+    public partial class EditConfig : ContentView
     {
-        public ListConfig()
+        public EditConfig()
         {
             InitializeComponent();
         }
