@@ -17,6 +17,6 @@ namespace HoldersManager.Models
         public string Comments { get; set; }
 
         // Navigation properties
-        public HolderType HolderType { get; set; }
+        //public HolderType HolderType { get; set; }
     }
 }

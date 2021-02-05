@@ -11,6 +11,11 @@ namespace HoldersManager.ViewModels
     [QueryProperty(nameof(ItemId), nameof(ItemId))]
     public class ExposureUnitEditViewModel : ConfigEditBaseViewModel<ExposureUnit>
     {
+        public ExposureUnitEditViewModel()
+        {
+            ItemName = "Exposure unit";
+        }
+
         protected override bool HasDbConstraintErrors(ref string errorMessage)
         {
             using (var dbcontext = new HoldersManagerContext())

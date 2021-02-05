@@ -8,13 +8,18 @@
             <conv:PercentToStringConverter x:Key="PercentToString" />
         </ResourceDictionary>
     </ContentPage.Resources>
-    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="search.png" Text="Add Holder" Command="{Binding AddHolderCommand}"/>
+    </ContentPage.ToolbarItems>
+
     <StackLayout>
-        <Button x:Name="btnAddHolder" Text="New Holder" Command="{Binding AddHolderCommand}" Margin="0,5,0,0"></Button>
+        
         <ListView x:Name="MyListView"
-                ItemsSource="{Binding Holders}" 
-                SelectedItem="{Binding SelectedItem, Mode=TwoWay}" RefreshCommand="{Binding LoadItemsCommand}"                
-                CachingStrategy="RecycleElement" RowHeight="120"  SeparatorColor="Black" >
+                  ItemsSource="{Binding Holders}" 
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                  CachingStrategy="RecycleElement" 
+                  RowHeight="120"
+                  SeparatorColor="Black" >
 
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -27,7 +32,7 @@
                                 Style="{DynamicResource ListItemTextStyle}" />
                                 <Label Text="{Binding HolderTypeName}" 
                                 Style="{DynamicResource ListItemTextStyle}" />
-                            </StackLayout>                           
+                            </StackLayout>
                             <StackLayout Orientation="Horizontal">
                                 <Label Text="Loading ratio :" Style="{DynamicResource ListItemDetailTextStyle}"/>
                                 <Label Text="{Binding LoadingRatio, Converter={StaticResource PercentToString}}" 
@@ -45,5 +50,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        
     </StackLayout>
 </ContentPage>

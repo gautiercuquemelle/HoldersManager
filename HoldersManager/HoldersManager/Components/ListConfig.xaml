@@ -5,7 +5,7 @@
   <ContentView.Content>
         <StackLayout>
 
-            <Button Grid.Column="1" Text="Add" Command="{Binding AddItemCommand}" Margin="0,5,0,10"/>
+            <!--<Button Grid.Column="1" Text="Add" Command="{Binding AddItemCommand}" Margin="0,5,0,10"/>-->
 
             <ListView x:Name="MyListView"
             ItemsSource="{Binding Items}"

@@ -34,33 +34,37 @@
             <Button Grid.Column="1" Text="Load" Command="{Binding LoadCommand}"/>
             <Button Grid.Column="2" Text="Develoment"></Button>
         </Grid>
-        
+
         <!-- Liste des films chargés -->
         <ListView x:Name="MyListView"
             ItemsSource="{Binding HolderFilms}"            
-            CachingStrategy="RecycleElement">
-            <!--Built in Cells-->
+            CachingStrategy="RecycleElement"  
+            RowHeight="120" >
+
+            <!--Custom View Cells-->
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding .}" />
+                    <ViewCell>
+                        <StackLayout>
+                            <Label Text="{Binding FilmName}" FontAttributes="Bold" 
+                                Style="{DynamicResource ListItemTextStyle}" />
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="ISO : " />
+                                <Label Text="{Binding ISO}" 
+                                    Style="{DynamicResource ListItemDetailTextStyle}"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Exposed on : " />
+                                <Label Text="{Binding ExposureDate}" 
+                                    Style="{DynamicResource ListItemDetailTextStyle}"/>
+                            </StackLayout>
+                            <Label Text="{Binding Comments}" 
+                                    Style="{DynamicResource ListItemDetailTextStyle}"/>
+                        </StackLayout>
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
 
-            <!--Custom View Cells-->
-            <!--
-    <ListView.ItemTemplate>
-      <DataTemplate>
-        <ViewCell>
-          <StackLayout>
-            <Label Text="{Binding Text}" 
-                   Style="{DynamicResource ListItemTextStyle}" />
-            <Label Text="{Binding Detail}" 
-                   Style="{DynamicResource ListItemDetailTextStyle}"/>
-          </StackLayout>
-        </ViewCell>
-      </DataTemplate>
-    </ListView.ItemTemplate>
-    -->
         </ListView>
     </StackLayout>
 </ContentPage>

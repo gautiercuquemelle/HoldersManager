@@ -14,6 +14,7 @@ namespace HoldersManager.ViewModels
         public Command SaveCommand { get; }
         public Command DeleteCommand { get; }
 
+        public string ItemName { get; set; } = typeof(T).Name;
         public string ItemId
         {
             set => LoadItemDetails(value);

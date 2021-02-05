@@ -42,8 +42,8 @@ namespace HoldersManager.ViewModels
             set => SetProperty(ref _holderType, value);
         }
 
-        private ObservableCollection<HolderFilm> _holderFilms;
-        public ObservableCollection<HolderFilm> HolderFilms 
+        private ObservableCollection<HolderFilmDetails> _holderFilms;
+        public ObservableCollection<HolderFilmDetails> HolderFilms
         {
             get => _holderFilms;
             set => SetProperty(ref _holderFilms, value);
@@ -87,7 +87,24 @@ namespace HoldersManager.ViewModels
                 {
                     HolderType = dbcontext.HolderTypes.FirstOrDefault(p => p.Id == Holder.HolderTypeId);
 
-                    HolderFilms = new ObservableCollection<HolderFilm>(dbcontext.HolderFilms.Where(p => p.HolderId == Holder.Id));
+                    HolderFilms = new ObservableCollection<HolderFilmDetails>(
+                        from hf in dbcontext.HolderFilms.Where(p => p.HolderId == Holder.Id)
+                        join h in dbcontext.Holders on hf.HolderId equals h.Id
+                        join f in dbcontext.Films on hf.FilmId equals f.Id
+                        join ft in dbcontext.FilmTypes on f.FilmTypeId equals ft.Id
+                        join FE in dbcontext.FilmExposures on f.Id equals FE.FilmId into fedefault
+                        from fe in fedefault.DefaultIfEmpty()
+                        select new HolderFilmDetails
+                        {
+                            Id = hf.Id,
+                            HolderId = hf.HolderId,
+                            HolderName = h.HolderName,
+                            FilmId = hf.FilmId,
+                            FilmName = ft.Name,
+                            ISO = ft.ISO,
+                            ExposureDateTime = fe.ExposureDateTime,  
+                            Comments=f.Comments
+                        });
                 }
                 else
                 {

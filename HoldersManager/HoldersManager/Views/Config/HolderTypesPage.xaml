@@ -4,6 +4,9 @@
              xmlns:cmp="clr-namespace:HoldersManager.Components"
              x:Class="HoldersManager.Views.HolderTypesPage">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem  Text="Add" Command="{Binding AddItemCommand}" />
+    </ContentPage.ToolbarItems>
     <cmp:ListConfig/>
     
 </ContentPage>
