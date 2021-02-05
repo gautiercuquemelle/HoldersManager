@@ -1,0 +1,19 @@
+name: CI on Push and Pull Request
+
+on: [push, pull_request]
+
+jobs:
+  
+        
+  Android:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Android
+      run: |
+        cd HoldersManager
+        nuget restore
+        cd HoldersManager.Android
+        msbuild HoldersManager.Android.csproj /verbosity:normal /t:Rebuild /p:Configuration=Debug
+        
+  
