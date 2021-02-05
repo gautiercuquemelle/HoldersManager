@@ -1,5 +1,6 @@
 ﻿using HoldersManager.Models;
 using HoldersManager.Services;
+using HoldersManager.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace HoldersManager.ViewModels
     [QueryProperty(nameof(HolderFilmId), nameof(HolderFilmId))]
     public class HolderFilmDetailViewModel : BaseViewModel
     {
-        public Command ExposeCommand { get; set; }
+        public Command AddExposureCommand { get; set; }
         public Command DevelopmentCommand { get; set; }
         public Command UnloadCommand { get; set; }
 
@@ -30,8 +31,8 @@ namespace HoldersManager.ViewModels
         public HolderFilm HolderFilm
         {
             get => _holderFilm;
-            set { SetProperty(ref _holderFilm, value); 
-                OnPropertyChanged("HolderFilmDetails"); }
+            set { SetProperty(ref _holderFilm, value);
+                OnPropertyChanged(() => HolderFilm); }
         }
 
         private Film _film;
@@ -41,24 +42,45 @@ namespace HoldersManager.ViewModels
             set
             {
                 SetProperty(ref _film, value);
-                OnPropertyChanged("Film");
+                OnPropertyChanged(() => Film);
             }
         }
 
-        private FilmExposure _filmExposure;
-        public FilmExposure FilmExposure
+        private List<FilmExposure> _filmExposures;
+        public List<FilmExposure> FilmExposures
         {
-            get => _filmExposure;
+            get => _filmExposures;
             set
             {
-                SetProperty(ref _filmExposure, value);
-                OnPropertyChanged("FilmExposure");
+                SetProperty(ref _filmExposures, value);
+                OnPropertyChanged(() => FilmExposures);
+                OnPropertyChanged(() => HasNoExposure);
+            }
+        }
+
+        private FilmExposure _selectedFilmExposure;
+        public FilmExposure SelectedFilmExposure
+        {
+            get => _selectedFilmExposure;
+            set
+            {
+                SetProperty(ref _selectedFilmExposure, value);
+            }
+        }
+
+        public bool HasNoExposure
+        {
+            get
+            {
+                return _filmExposures == null || _filmExposures.Count() == 0;
             }
         }
 
         public HolderFilmDetailViewModel()
         {
-
+            AddExposureCommand = new Command(OnAddExposure);
+            DevelopmentCommand = new Command(OnDevelopment);
+            UnloadCommand= new Command(OnUnload);
         }
 
         private void LoadHolderFilmDetails(string holderFilmId)
@@ -67,8 +89,32 @@ namespace HoldersManager.ViewModels
             {
                 HolderFilm = dbcontext.HolderFilms.FirstOrDefault(p=>p.Id == int.Parse(holderFilmId));
                 Film = dbcontext.Films.FirstOrDefault(p => p.Id == HolderFilm.FilmId);
-                FilmExposure = dbcontext.FilmExposures.FirstOrDefault(p=>p.FilmId == HolderFilm.FilmId);
+                FilmExposures = dbcontext.FilmExposures.Where(p=>p.FilmId == HolderFilm.FilmId).ToList();
             }
+        }
+
+        private async void OnAddExposure()
+        {
+            //var uri = $"{nameof(ExposurePage)}?{nameof(ExposureViewModel.FilmId)}={Film.Id}&{nameof(ExposureViewModel.ExposureId)}=0";
+            try
+            {
+                await Shell.Current.GoToAsync($"{nameof(ExposurePage)}?{nameof(ExposureViewModel.FilmId)}={Film.Id}&{nameof(ExposureViewModel.ExposureId)}=0");
+            }
+            catch(Exception e)
+            {
+                DisplayAlert("KO", e.Message, "ok");
+            }
+            
+        }
+
+        private async void  OnDevelopment()
+        {
+
+        }
+
+        private async void OnUnload()
+        {
+
         }
 
         public void RefreshPage()

@@ -11,10 +11,13 @@ namespace HoldersManager
         public AppShell()
         {
             InitializeComponent();
+
             Routing.RegisterRoute(nameof(HolderDetailPage), typeof(HolderDetailPage));
             Routing.RegisterRoute(nameof(HolderEditPage), typeof(HolderEditPage));
             Routing.RegisterRoute(nameof(HolderFilmDetailPage), typeof(HolderFilmDetailPage));
             Routing.RegisterRoute(nameof(LoadHolderPage), typeof(LoadHolderPage));
+            Routing.RegisterRoute(nameof(ExposurePage), typeof(ExposurePage));
+
             Routing.RegisterRoute(nameof(HolderTypesPage), typeof(HolderTypesPage));
             Routing.RegisterRoute(nameof(HolderTypeEditPage), typeof(HolderTypeEditPage));
             Routing.RegisterRoute(nameof(FilmTypesPage), typeof(FilmTypesPage));

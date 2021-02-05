@@ -58,7 +58,7 @@ namespace HoldersManager.ViewModels
         {
             if(SelectedFilmType == null)
             {
-                Application.Current.MainPage.DisplayAlert("Error", "You must select a film type", "Ok");
+                DisplayAlert("Error", "You must select a film type", "Ok");
                 return;
             }
 

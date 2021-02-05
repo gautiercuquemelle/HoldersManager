@@ -54,7 +54,7 @@ namespace HoldersManager.ViewModels
             string errorMessage = null;
             if (HasValidationErrors(ref errorMessage))
             {
-                Application.Current.MainPage.DisplayAlert("Error", errorMessage, "Ok");
+                DisplayAlert("Error", errorMessage, "Ok");
                 return;
             }
 
@@ -93,7 +93,7 @@ namespace HoldersManager.ViewModels
                 string errorMessage = null;
                 if (HasDbConstraintErrors(ref errorMessage))
                 {
-                    Application.Current.MainPage.DisplayAlert("Error", errorMessage, "Ok");
+                    DisplayAlert("Error", errorMessage, "Ok");
                     return;
                 }
 

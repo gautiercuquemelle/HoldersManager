@@ -34,7 +34,11 @@ namespace HoldersManager.ViewModels
         public Holder Holder
         {
             get => _holder;
-            set { SetProperty(ref _holder, value); OnPropertyChanged("HolderType"); }
+            set 
+            {
+                SetProperty(ref _holder, value); 
+                OnPropertyChanged(()=>HolderType);
+            }
         }
 
         private HolderType _holderType;
@@ -61,8 +65,8 @@ namespace HoldersManager.ViewModels
             get => _holderFilms;
             set
             { 
-                SetProperty(ref _holderFilms, value); 
-                OnPropertyChanged("IsUnloaded");
+                SetProperty(ref _holderFilms, value);
+                OnPropertyChanged(() => IsUnloaded);
             }
         }
 
@@ -100,7 +104,7 @@ namespace HoldersManager.ViewModels
             {
                 if (dbcontext.HolderFilms.Any(p => p.HolderId == Holder.Id))
                 {
-                    await Application.Current.MainPage.DisplayAlert("Error", "Can't load a partially loaded holder", "OK");
+                    DisplayAlert("Error", "Can't load a partially loaded holder", "OK");
                     return;
                 }
             }
@@ -144,7 +148,7 @@ namespace HoldersManager.ViewModels
                 }
                 else
                 {
-                    Application.Current.MainPage.DisplayAlert("Error", "Can't find selected holder", "Back");
+                    DisplayAlert("Error", "Can't find selected holder", "Back");
                     Shell.Current.SendBackButtonPressed();
                 }
             }

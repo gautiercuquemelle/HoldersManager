@@ -3,8 +3,11 @@ using HoldersManager.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
+using System.Reflection;
+using HoldersManager.Helpers;
 
 namespace HoldersManager.ViewModels
 {
@@ -36,6 +39,11 @@ namespace HoldersManager.ViewModels
             OnPropertyChanged(propertyName);
             return true;
         }
+                
+        protected async void DisplayAlert(string title, string message, string cancel)
+        {
+            await Application.Current.MainPage.DisplayAlert(title, message, cancel);
+        }
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -47,6 +55,15 @@ namespace HoldersManager.ViewModels
 
             changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        protected void OnPropertyChanged(Expression<Func<object>> expression)
+        {
+            string propertyName = PropertyName.For(expression);
+            this.PropertyChanged(
+                this,
+                new PropertyChangedEventArgs(propertyName));
+        }
+
         #endregion
     }
 }

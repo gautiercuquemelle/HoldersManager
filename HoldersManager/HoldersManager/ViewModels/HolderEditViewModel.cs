@@ -63,7 +63,7 @@ namespace HoldersManager.ViewModels
         {
             if(SelectedHolderType == null)
             {
-                Application.Current.MainPage.DisplayAlert("Error", "You must select a holder type", "Ok");
+                DisplayAlert("Error", "You must select a holder type", "Ok");
                 return;
             }            
 
@@ -101,7 +101,7 @@ namespace HoldersManager.ViewModels
             {
                 if (dbcontext.HolderFilms.Where(p => p.HolderId == Holder.Id).Any())
                 {
-                    Application.Current.MainPage.DisplayAlert("Error", "Can't delete a holder with loaded film", "Ok");
+                    DisplayAlert("Error", "Can't delete a holder with loaded film", "Ok");
                     return;
                 }
 
