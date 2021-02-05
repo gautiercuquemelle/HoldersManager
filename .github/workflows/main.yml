@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Android
       run: |
-        cd HoldersManager
+        cd .
         nuget restore
         cd HoldersManager.Android
         msbuild HoldersManager.Android.csproj /verbosity:normal /t:Rebuild /p:Configuration=Debug
