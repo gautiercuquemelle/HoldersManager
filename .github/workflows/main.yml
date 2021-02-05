@@ -13,6 +13,7 @@ jobs:
       run: |
         cd .
         nuget restore
+        cd HoldersManager
         cd HoldersManager.Android
         msbuild HoldersManager.Android.csproj /verbosity:normal /t:Rebuild /p:Configuration=Debug
         
