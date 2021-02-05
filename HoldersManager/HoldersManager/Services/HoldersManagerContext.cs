@@ -96,6 +96,6 @@ namespace HoldersManager.Services
             cptChanges += await SaveChangesAsync();
 
             return cptChanges;
-        }
+        }        
     }
 }

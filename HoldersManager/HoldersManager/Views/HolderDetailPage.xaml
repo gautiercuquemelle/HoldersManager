@@ -31,13 +31,14 @@
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
             <Button Grid.Column="0" Text="Edit" Command="{Binding EditCommand}"/>
-            <Button Grid.Column="1" Text="Load" Command="{Binding LoadCommand}"/>
-            <Button Grid.Column="2" Text="Develoment"></Button>
+            <Button Grid.Column="1" Text="Load" Command="{Binding LoadCommand}" IsEnabled="{Binding IsUnloaded}"/>
+            <Button Grid.Column="2" Text="Development" Command="{Binding DevelopmentCommand}" IsEnabled="{Binding IsExposed}"></Button>
         </Grid>
 
         <!-- Liste des films chargés -->
         <ListView x:Name="MyListView"
-            ItemsSource="{Binding HolderFilms}"            
+            ItemsSource="{Binding HolderFilms}"
+            SelectedItem="{Binding SelectedHolderFilm}"
             CachingStrategy="RecycleElement"  
             RowHeight="120" >
 

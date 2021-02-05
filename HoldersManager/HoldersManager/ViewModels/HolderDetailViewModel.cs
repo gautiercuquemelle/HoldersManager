@@ -17,6 +17,8 @@ namespace HoldersManager.ViewModels
 
         public Command LoadCommand { get; }
 
+        public Command DevelopmentCommand { get; set; }
+
         private string _holderId;
         public string HolderId
         {
@@ -42,20 +44,49 @@ namespace HoldersManager.ViewModels
             set => SetProperty(ref _holderType, value);
         }
 
+        private HolderFilmDetails _selectedHolderFilm;
+        public HolderFilmDetails SelectedHolderFilm
+        {
+            get => _selectedHolderFilm;
+            set
+            {
+                SetProperty(ref _selectedHolderFilm, value);
+                OnHolderFilmSelected(value);
+            }
+        }
+
         private ObservableCollection<HolderFilmDetails> _holderFilms;
         public ObservableCollection<HolderFilmDetails> HolderFilms
         {
             get => _holderFilms;
-            set => SetProperty(ref _holderFilms, value);
+            set
+            { 
+                SetProperty(ref _holderFilms, value); 
+                OnPropertyChanged("IsUnloaded");
+            }
+        }
+
+        public bool IsUnloaded
+        {
+            get
+            {
+                return _holderFilms == null || _holderFilms.Count() == 0;
+            }
+        }
+
+        public bool IsExposed
+        {
+            get
+            {
+                return _holderFilms != null && _holderFilms.Any(p => p.ExposureDateTime.HasValue);
+            }
         }
 
         public HolderDetailViewModel()
         {
             EditCommand = new Command(OnEditHolder);
             LoadCommand = new Command(OnLoadHolder);
-
-            //HolderFilms = new ObservableCollection<HolderFilm>(); // TODO : Load from DB
-
+            DevelopmentCommand = new Command(OnDevelopment);
         }
 
         private async void OnEditHolder()
@@ -75,6 +106,11 @@ namespace HoldersManager.ViewModels
             }
 
             await Shell.Current.GoToAsync($"{nameof(LoadHolderPage)}?{nameof(LoadHolderViewModel.HolderId)}={Holder.Id}");
+        }
+
+        private async void OnDevelopment()
+        {
+
         }
 
         private void LoadHolderDetails(string holderId)
@@ -102,8 +138,8 @@ namespace HoldersManager.ViewModels
                             FilmId = hf.FilmId,
                             FilmName = ft.Name,
                             ISO = ft.ISO,
-                            ExposureDateTime = fe.ExposureDateTime,  
-                            Comments=f.Comments
+                            ExposureDateTime = fe.ExposureDateTime,
+                            Comments = f.Comments
                         });
                 }
                 else
@@ -114,7 +150,18 @@ namespace HoldersManager.ViewModels
             }
         }
 
-        public void RefreshView()
+        private async void OnHolderFilmSelected(HolderFilmDetails holderFilm)
+        {
+            if (holderFilm == null)
+                return;
+
+            // This will push the ItemDetailPage onto the navigation stack
+            await Shell.Current.GoToAsync($"{nameof(HolderFilmDetailPage)}?{nameof(HolderFilmDetailViewModel.HolderFilmId)}={holderFilm.Id}");
+
+            SelectedHolderFilm = null;
+        }
+
+        public void RefreshPage()
         {
             LoadHolderDetails(HolderId);
         }

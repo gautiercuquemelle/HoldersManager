@@ -1,8 +1,8 @@
 ﻿using HoldersManager.ViewModels;
 using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
@@ -11,21 +11,21 @@ using Xamarin.Forms.Xaml;
 namespace HoldersManager.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class HolderDetailPage : ContentPage
+    public partial class HolderFilmDetailPage : ContentPage
     {
-        HolderDetailViewModel _viewModel;
-        public HolderDetailPage()
+        HolderFilmDetailViewModel _viewModel;
+
+        public HolderFilmDetailPage()
         {
             InitializeComponent();
-
-            BindingContext = _viewModel = new HolderDetailViewModel();
+            BindingContext = _viewModel = new HolderFilmDetailViewModel();
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            _viewModel.RefreshPage();
 
+            _viewModel.RefreshPage();
         }
     }
 }
