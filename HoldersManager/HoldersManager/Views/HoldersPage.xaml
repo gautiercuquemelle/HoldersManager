@@ -1,29 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"             
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"    
+             xmlns:conv="clr-namespace:HoldersManager.Converters"
              x:Class="HoldersManager.Views.HoldersPage">
-
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:PercentToStringConverter x:Key="PercentToString" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <StackLayout>
         <Button x:Name="btnAddHolder" Text="New Holder" Command="{Binding AddHolderCommand}" Margin="0,5,0,0"></Button>
         <ListView x:Name="MyListView"
-            ItemsSource="{Binding Holders}" 
-                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}" RefreshCommand="{Binding LoadItemsCommand}"                
-            CachingStrategy="RecycleElement">
-   
+                ItemsSource="{Binding Holders}" 
+                SelectedItem="{Binding SelectedItem, Mode=TwoWay}" RefreshCommand="{Binding LoadItemsCommand}"                
+                CachingStrategy="RecycleElement" RowHeight="120"  SeparatorColor="Black" >
+
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <ViewCell>
-                        <StackLayout>
-                            <Label Text="{Binding HolderName}"
-                            Style="{DynamicResource ListItemTextStyle}" />
+                    <ViewCell >
+                        <StackLayout >
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding HolderName}" FontAttributes="Bold"
+                                Style="{DynamicResource ListItemTextStyle}" />
+                                <Label Text=" - " 
+                                Style="{DynamicResource ListItemTextStyle}" />
+                                <Label Text="{Binding HolderTypeName}" 
+                                Style="{DynamicResource ListItemTextStyle}" />
+                            </StackLayout>                           
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Loading ratio :" Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                <Label Text="{Binding LoadingRatio, Converter={StaticResource PercentToString}}" 
+                                    Style="{DynamicResource ListItemDetailTextStyle}"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Exposure ratio :" Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                <Label Text="{Binding ExposureRatio, Converter={StaticResource PercentToString}}" 
+                                    Style="{DynamicResource ListItemDetailTextStyle}"/>
+                            </StackLayout>
                             <Label Text="{Binding Comments}" 
-                            Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                Style="{DynamicResource ListItemDetailTextStyle}"/>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
-
         </ListView>
     </StackLayout>
-
 </ContentPage>

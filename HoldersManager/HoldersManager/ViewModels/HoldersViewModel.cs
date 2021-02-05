@@ -14,20 +14,27 @@ namespace HoldersManager.ViewModels
 {
     public class HoldersViewModel : BaseViewModel
     {
-        private Holder _selectedItem;
+        private HolderDetails _selectedItem;
 
-        public ObservableCollection<Holder> Holders { get; set; }
+        public ObservableCollection<HolderDetails> Holders { get; set; }
         public Command LoadItemsCommand { get; }
-        public Command AddHolderCommand { get; }        
-        public Command<Holder> HolderTapped { get; }
+        public Command AddHolderCommand { get; }
+
+        public HolderDetails SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                SetProperty(ref _selectedItem, value);
+                OnHolderSelected(value);
+            }
+        }
 
         public HoldersViewModel()
         {
             Title = "Holders";
-            Holders = new ObservableCollection<Holder>();
+            Holders = new ObservableCollection<HolderDetails>();
             LoadItemsCommand = new Command(ExecuteLoadHoldersCommand);
-            HolderTapped = new Command<Holder>(OnHolderSelected);
-
             AddHolderCommand = new Command(OnAddHolder);
 
             ExecuteLoadHoldersCommand();
@@ -45,10 +52,24 @@ namespace HoldersManager.ViewModels
                 {
                     var holderTypes = dbContext.HolderTypes.ToList();
                     var holders = dbContext.Holders.ToList();
-                    foreach (var item in holders)
+                    foreach (var holder in holders)
                     {
-                        item.HolderType = holderTypes.FirstOrDefault(p => p.Id == item.HolderTypeId);
-                        Holders.Add(item);
+                        // Get hold type details
+                        var holderType = holderTypes.FirstOrDefault(p => p.Id == holder.HolderTypeId);
+
+                        // Get laoding informations
+                        Holders.Add(new HolderDetails
+                        {
+                            Id = holder.Id,
+                            HolderName = holder.HolderName,
+                            HolderTypeName = holderType.Name,
+                            Comments = holder.Comments,
+                            NumberOfFrames = holder.NumberOfFrames,
+                            CreationDate = holder.CreationDate,
+                            DiscardAfterDevelopment = holder.DiscardAfterDevelopment,
+                            NumberOfLoadedFrames = GetNumberOfLoadedFrames(dbContext, holder.Id),
+                            NumberOfExposedFrames = GetNumberOfExposedFrames(dbContext, holder.Id)
+                        });
                     }
                 }
             }
@@ -62,28 +83,31 @@ namespace HoldersManager.ViewModels
             }
         }
 
+        private int GetNumberOfLoadedFrames(HoldersManagerContext dbContext, int holderId)
+        {
+            return dbContext.HolderFilms.Count(p => p.HolderId == holderId);
+        }
+
+        private int GetNumberOfExposedFrames(HoldersManagerContext dbContext, int holderId)
+        {
+            return (from hf in dbContext.HolderFilms.Where(p => p.HolderId == holderId)
+                    join f in dbContext.Films on hf.FilmId equals f.Id
+                    join e in dbContext.FilmExposures on f.Id equals e.FilmId
+                    select e.Id).Count();
+        }
+
         public void OnAppearing()
         {
             IsBusy = true;
             SelectedItem = null;
         }
-
-        public Holder SelectedItem
-        {
-            get => _selectedItem;
-            set
-            {
-                SetProperty(ref _selectedItem, value);
-                OnHolderSelected(value);
-            }
-        }
-
+        
         private async void OnAddHolder(object obj)
         {
             await Shell.Current.GoToAsync($"{nameof(HolderEditPage)}?{nameof(HolderEditViewModel.HolderId)}=0");
         }
 
-        async void OnHolderSelected(Holder holder)
+        async void OnHolderSelected(HolderDetails holder)
         {
             if (holder == null)
                 return;

@@ -12,6 +12,8 @@ namespace HoldersManager.Models
         public int FilmTypeId { get; set; }
         public string Comments { get; set; }
 
+        public DateTime CreationDate { get; set; }
+
         // Navigation properties
         public FilmType FilmType { get; set; }
     }

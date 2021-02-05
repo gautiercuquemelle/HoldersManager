@@ -12,7 +12,7 @@ namespace HoldersManager.Models
         public int HolderTypeId { get; set; }
         public string HolderName { get; set; }
         public DateTime CreationDate { get; set; }
-        public int FrameNumber { get; set; }
+        public int NumberOfFrames { get; set; }
         public bool DiscardAfterDevelopment { get; set; }
         public string Comments { get; set; }
 

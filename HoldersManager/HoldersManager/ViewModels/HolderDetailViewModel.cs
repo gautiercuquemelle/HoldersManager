@@ -15,6 +15,8 @@ namespace HoldersManager.ViewModels
     {
         public Command EditCommand { get; }
 
+        public Command LoadCommand { get; }
+
         private string _holderId;
         public string HolderId
         {
@@ -40,19 +42,39 @@ namespace HoldersManager.ViewModels
             set => SetProperty(ref _holderType, value);
         }
 
-    public ObservableCollection<HolderFilm> HolderFilms { get; set; }
+        private ObservableCollection<HolderFilm> _holderFilms;
+        public ObservableCollection<HolderFilm> HolderFilms 
+        {
+            get => _holderFilms;
+            set => SetProperty(ref _holderFilms, value);
+        }
 
         public HolderDetailViewModel()
         {
             EditCommand = new Command(OnEditHolder);
+            LoadCommand = new Command(OnLoadHolder);
 
-            HolderFilms = new ObservableCollection<HolderFilm>(); // TODO : Load from DB
+            //HolderFilms = new ObservableCollection<HolderFilm>(); // TODO : Load from DB
 
         }
 
         private async void OnEditHolder()
         {
             await Shell.Current.GoToAsync($"{nameof(HolderEditPage)}?{nameof(HolderEditViewModel.HolderId)}={Holder.Id}");
+        }
+
+        private async void OnLoadHolder()
+        {
+            using (var dbcontext = new HoldersManagerContext())
+            {
+                if (dbcontext.HolderFilms.Any(p => p.HolderId == Holder.Id))
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Can't load a partially loaded holder", "OK");
+                    return;
+                }
+            }
+
+            await Shell.Current.GoToAsync($"{nameof(LoadHolderPage)}?{nameof(LoadHolderViewModel.HolderId)}={Holder.Id}");
         }
 
         private void LoadHolderDetails(string holderId)
@@ -64,6 +86,8 @@ namespace HoldersManager.ViewModels
                 if (Holder != null)
                 {
                     HolderType = dbcontext.HolderTypes.FirstOrDefault(p => p.Id == Holder.HolderTypeId);
+
+                    HolderFilms = new ObservableCollection<HolderFilm>(dbcontext.HolderFilms.Where(p => p.HolderId == Holder.Id));
                 }
                 else
                 {

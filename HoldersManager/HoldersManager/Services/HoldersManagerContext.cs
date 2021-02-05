@@ -26,6 +26,7 @@ namespace HoldersManager.Services
         public HoldersManagerContext()
         {
             SQLitePCL.Batteries_V2.Init();
+            //this.Database.EnsureDeleted();
             this.Database.EnsureCreated();            
         }
 
@@ -42,8 +43,11 @@ namespace HoldersManager.Services
             //modelBuilder.Entity<HolderType>()
             //    .HasKey(b => b.Id);
 
-            //modelBuilder.Entity<Holder>()
-            //    .Navigation<HolderType>(p => p.HolderType).AutoInclude(true);
+            modelBuilder.Entity<HolderFilm>()
+                .Navigation<Holder>(p => p.Holder);
+
+            modelBuilder.Entity<HolderFilm>()
+                .Navigation<Film>(p => p.Film);
 
             //modelBuilder.Entity<HolderType>()
             //    .Navigation<Holder>(p => p.Holders).AutoInclude(false);
@@ -86,7 +90,7 @@ namespace HoldersManager.Services
 
             if (await Holders.CountAsync() == 0)
             {
-                Holders.Add(new Holder { CreationDate=DateTime.Now, HolderTypeId=HolderTypes.FirstOrDefault().Id, HolderName="Demo holder", FrameNumber=2, DiscardAfterDevelopment=false, Comments="Généré automatiquement" });
+                Holders.Add(new Holder { CreationDate=DateTime.Now, HolderTypeId=HolderTypes.FirstOrDefault().Id, HolderName="Demo holder", NumberOfFrames=2, DiscardAfterDevelopment=false, Comments="Généré automatiquement" });
             }
 
             cptChanges += await SaveChangesAsync();
