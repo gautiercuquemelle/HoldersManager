@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using System.Reflection;
 using HoldersManager.Helpers;
+using System.Threading.Tasks;
 
 namespace HoldersManager.ViewModels
 {
@@ -43,6 +44,12 @@ namespace HoldersManager.ViewModels
         protected async void DisplayAlert(string title, string message, string cancel)
         {
             await Application.Current.MainPage.DisplayAlert(title, message, cancel);
+        }
+
+        protected async Task<bool> DisplayConfirmationAlert(string title, string message, string ok, string cancel)
+        {
+            var action = await Application.Current.MainPage.DisplayAlert(title, message, ok, cancel);
+            return action;
         }
 
         #region INotifyPropertyChanged

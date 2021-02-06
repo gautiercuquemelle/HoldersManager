@@ -65,6 +65,7 @@ namespace HoldersManager.ViewModels
             set
             {
                 SetProperty(ref _selectedFilmExposure, value);
+                OnSelectExposure();
             }
         }
 
@@ -90,21 +91,26 @@ namespace HoldersManager.ViewModels
                 HolderFilm = dbcontext.HolderFilms.FirstOrDefault(p=>p.Id == int.Parse(holderFilmId));
                 Film = dbcontext.Films.FirstOrDefault(p => p.Id == HolderFilm.FilmId);
                 FilmExposures = dbcontext.FilmExposures.Where(p=>p.FilmId == HolderFilm.FilmId).ToList();
+                FilmExposures.ForEach(p => 
+                {
+                    p.Camera = dbcontext.Cameras.FirstOrDefault(fe => fe.Id == p.CameraId);                    
+                });
             }
         }
 
         private async void OnAddExposure()
         {
-            //var uri = $"{nameof(ExposurePage)}?{nameof(ExposureViewModel.FilmId)}={Film.Id}&{nameof(ExposureViewModel.ExposureId)}=0";
-            try
-            {
-                await Shell.Current.GoToAsync($"{nameof(ExposurePage)}?{nameof(ExposureViewModel.FilmId)}={Film.Id}&{nameof(ExposureViewModel.ExposureId)}=0");
-            }
-            catch(Exception e)
-            {
-                DisplayAlert("KO", e.Message, "ok");
-            }
-            
+            await Shell.Current.GoToAsync($"{nameof(ExposurePage)}?{nameof(ExposureViewModel.FilmId)}={Film.Id}&{nameof(ExposureViewModel.ExposureId)}=0");            
+        }
+
+        private async void OnSelectExposure()
+        {
+            if(SelectedFilmExposure == null)
+                return;
+
+            await Shell.Current.GoToAsync($"{nameof(ExposurePage)}?{nameof(ExposureViewModel.FilmId)}={Film.Id}&{nameof(ExposureViewModel.ExposureId)}={SelectedFilmExposure.Id}");
+
+            SelectedFilmExposure = null;
         }
 
         private async void  OnDevelopment()

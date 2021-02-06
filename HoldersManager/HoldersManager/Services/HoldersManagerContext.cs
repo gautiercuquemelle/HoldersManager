@@ -40,17 +40,14 @@ namespace HoldersManager.Services
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<HolderType>()
-            //    .HasKey(b => b.Id);
-
             modelBuilder.Entity<HolderFilm>()
                 .Navigation<Holder>(p => p.Holder);
 
             modelBuilder.Entity<HolderFilm>()
                 .Navigation<Film>(p => p.Film);
 
-            //modelBuilder.Entity<HolderType>()
-            //    .Navigation<Holder>(p => p.Holders).AutoInclude(false);
+            modelBuilder.Entity<FilmExposure>()
+                .Navigation<ExposureUnit>(p => p.ExposureUnit).AutoInclude(true);
         }
 
         async public Task<int> InitializeEmptyDb()
@@ -97,5 +94,10 @@ namespace HoldersManager.Services
 
             return cptChanges;
         }        
+
+        //async public void UpdateSchema()
+        //{
+        //    await base.Database.ExecuteSqlRawAsync("");
+        //}
     }
 }

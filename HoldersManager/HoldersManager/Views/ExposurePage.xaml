@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:HoldersManager.Components"
              x:Class="HoldersManager.Views.ExposurePage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Save" Command="{Binding SaveCommand}"/>
@@ -9,42 +10,59 @@
 
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Camera"/>
-            <Picker ItemsSource="{Binding Cameras}"
+            <ScrollView>
+                <StackLayout >
+                    <Label Text="Camera"/>
+                    <Picker ItemsSource="{Binding Cameras}"
                     SelectedItem="{Binding SelectedCamera, Mode=TwoWay}"/>
 
 
-            <Label Text="Exposure date and time"/>
-            <DatePicker Date="{Binding FilmExposure.ExposureDateTime, Mode=TwoWay}"/>
+                    <Label Text="Exposure date and time"/>
+                    
+                    <local:DateTimePicker  DateTime="{Binding FilmExposure.ExposureDateTime, Mode=TwoWay}"/>
 
-            <Label Text="Aperture"/>
-            <Entry Text="{Binding FilmExposure.Aperture, Mode=TwoWay}" />
+                    <Label Text="Aperture"/>
+                    <Entry Text="{Binding FilmExposure.Aperture, Mode=TwoWay}" />
 
-            <Label Text="Exposure time"/>
-            <Entry Text="{Binding FilmExposure.Exposure, Mode=TwoWay}" />
+                    <Label Text="Exposure time"/>
+                    <Entry Text="{Binding FilmExposure.Exposure, Mode=TwoWay}" />
 
 
-            <Label Text="Exposure unit"/>
-            <Picker ItemsSource="{Binding ExposureUnits}"
+                    <Label Text="Exposure unit"/>
+                    <Picker ItemsSource="{Binding ExposureUnits}"
                     SelectedItem="{Binding SelectedExposureUnit, Mode=TwoWay}"/>
 
-            <Label Text="Comments"/>
-            <Editor Text="{Binding FilmExposure.Comments, Mode=TwoWay}" VerticalOptions="FillAndExpand" />
+                    <Label Text="Comments"/>
+                    <Editor Text="{Binding FilmExposure.Comments, Mode=TwoWay}" VerticalOptions="FillAndExpand" />
 
-            <Label Text="Location"/>
-            <Grid >
+                    <Label Text="Location"/>
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Entry Text="{Binding FilmExposure.Location, Mode=TwoWay}" Grid.Column="0" />
+                        <Button Text="Locate" Command="{Binding LocateCommand}" Grid.Column="1"/>
+                    </Grid>
+
+
+
+
+
+                </StackLayout>
+            </ScrollView>
+            <Grid Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-
-                <Entry Text="{Binding Location}" Grid.Column="0" />
-                <Button Text="Locate" Command="{Binding LocateCommand}" Grid.Column="1"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Button Text="Delete" BackgroundColor="OrangeRed" Grid.Column="2" Command="{Binding DeleteCommand}"/>
             </Grid>
-
-
-
-
 
         </StackLayout>
     </ContentPage.Content>

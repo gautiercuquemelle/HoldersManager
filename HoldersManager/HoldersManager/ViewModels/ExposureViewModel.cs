@@ -15,6 +15,7 @@ namespace HoldersManager.ViewModels
     {
         public Command SaveCommand { get; set; }
         public Command CancelCommand { get; set; }
+        public Command DeleteCommand { get; set; }
         public Command LocateCommand { get; set; }
 
         private string _filmId;
@@ -98,6 +99,7 @@ namespace HoldersManager.ViewModels
         {
             SaveCommand = new Command(OnSave);
             CancelCommand = new Command(() => Shell.Current.SendBackButtonPressed());
+            DeleteCommand = new Command(OnDelete);
             LocateCommand = new Command(OnLocate);
         }
 
@@ -106,37 +108,43 @@ namespace HoldersManager.ViewModels
             using(var dbContext = new HoldersManagerContext())
             {
                 FilmExposure = dbContext.FilmExposures.FirstOrDefault(p => p.Id == int.Parse(filmExposureId));
-                
+                Cameras = dbContext.Cameras.ToList();
+                ExposureUnits = dbContext.ExposureUnits.ToList();
+
                 if (FilmExposure == null)
                 {
                     FilmExposure = new FilmExposure
                     {
-                        FilmId = int.Parse(FilmId), 
+                        FilmId = int.Parse(FilmId),
+                        ExposureDateTime = DateTime.Now
                     };
-                }
+                    if (Cameras.Count == 1)
+                    {
+                        SelectedCamera = Cameras.FirstOrDefault();
+                    }
+                    else if (Cameras.Count > 1)
+                    {
+                        // Try to see if a camera is defined on another exposure for the same holder
+                        var req = from f in dbContext.Films // Starting from the current film
+                                  join hf in dbContext.HolderFilms on f.Id equals hf.FilmId // Get the HolderFilm object
+                                  join ahf in dbContext.HolderFilms on hf.HolderId equals ahf.HolderId // Then all the HolderFilms related to the same Holder
+                                  join af in dbContext.Films on ahf.FilmId equals af.Id // Then all the films related to this holders
+                                  join fe in dbContext.FilmExposures on af.Id equals fe.FilmId // And the FilmExposures (if any)
+                                  join c in dbContext.Cameras on fe.CameraId equals c.Id // And finally the cameras used for this exposures
+                                  where f.Id == int.Parse(FilmId)
+                                  select c;
 
-                Cameras = dbContext.Cameras.ToList();
-                if(Cameras.Count == 1)
+                        SelectedCamera = req.FirstOrDefault();
+                    }
+
+
+                    SelectedExposureUnit = ExposureUnits.FirstOrDefault();
+                }
+                else
                 {
-                    SelectedCamera = Cameras.FirstOrDefault();
+                    SelectedCamera = Cameras.FirstOrDefault(p => p.Id == FilmExposure.CameraId);
+                    SelectedExposureUnit = ExposureUnits.FirstOrDefault(p => p.Id == FilmExposure.ExposureUnitId);
                 }
-                else if (Cameras.Count > 1)
-                {
-                    // Try to see if a camera is defined on another exposure for the same holder
-                    var req = from f in dbContext.Films // Starting from the current film
-                              join hf in dbContext.HolderFilms on f.Id equals hf.FilmId // Get the HolderFilm object
-                              join ahf in dbContext.HolderFilms on hf.HolderId equals ahf.HolderId // Then all the HolderFilms related to the same Holder
-                              join af in dbContext.Films on ahf.FilmId equals af.Id // Then all the films related to this holders
-                              join fe in dbContext.FilmExposures on af.Id equals fe.FilmId // And the FilmExposures (if any)
-                              join c in dbContext.Cameras on fe.CameraId equals c.Id // And finally the cameras used for this exposures
-                              where f.Id == int.Parse(FilmId)
-                              select c;
-
-                    SelectedCamera = req.FirstOrDefault();
-                }
-
-                ExposureUnits = dbContext.ExposureUnits.ToList();
-                SelectedExposureUnit = ExposureUnits.FirstOrDefault();
             }            
         }
 
@@ -171,12 +179,31 @@ namespace HoldersManager.ViewModels
                     dbcontext.Update(FilmExposure);
                 }
 
-                dbcontext.SaveChangesAsync().Wait();
+                await dbcontext.SaveChangesAsync();
             }
 
             Shell.Current.SendBackButtonPressed();
         }
 
+        private async void OnDelete()
+        {
+            if (FilmExposure.Id == 0) // Not created yet
+            {
+                Shell.Current.SendBackButtonPressed();
+                return;
+            }
+
+            if (await DisplayConfirmationAlert("Confirm", "Delete this exposure ?", "Yes", "No"))
+            {
+                using (var dbcontext = new HoldersManagerContext())
+                {
+                    dbcontext.FilmExposures.Remove(FilmExposure);
+                    await dbcontext.SaveChangesAsync();
+                }
+
+                Shell.Current.SendBackButtonPressed();
+            }
+        }
         private async void OnLocate()
         {
             try

@@ -19,7 +19,7 @@
                 ItemsSource="{Binding FilmExposures}"
                 SelectedItem="{Binding SelectedFilmExposure, Mode=TwoWay}"
                 CachingStrategy="RecycleElement"  
-                RowHeight="120" >
+                RowHeight="140" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -31,7 +31,19 @@
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="Exposed on : " />
-                                    <Label Text="{Binding ExposureDate}" 
+                                    <Label Text="{Binding ExposureDateTime}" 
+                                    Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Aperture : " />
+                                    <Label Text="{Binding ExposureDateTime}" 
+                                    Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Exposure time : " />
+                                    <Label Text="{Binding ExposureDateTime}" 
+                                    Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                    <Label Text="{Binding ExposureUnit.Name}" 
                                     Style="{DynamicResource ListItemDetailTextStyle}"/>
                                 </StackLayout>
                                 <Label Text="{Binding Comments}" 
