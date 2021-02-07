@@ -18,7 +18,7 @@
             <Entry Text="{Binding Holder.HolderName, Mode=TwoWay}"/>
 
             <Label Text="Number of frames"/>
-            <Entry Text="{Binding Holder.NumberOfFrames, Mode=TwoWay}" />
+            <Entry Text="{Binding Holder.NumberOfFrames, Mode=TwoWay}" IsEnabled="{Binding IsNotLoaded}" />
 
             <StackLayout Orientation="Horizontal">
             <Label Text="Discard after development"/>

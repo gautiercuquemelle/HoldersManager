@@ -59,6 +59,8 @@ namespace HoldersManager.ViewModels
             }
         }
 
+        public bool IsNotLoaded { get; set; } = true;
+
         private void OnSaveHolder()
         {
             if(SelectedHolderType == null)
@@ -127,9 +129,12 @@ namespace HoldersManager.ViewModels
                 else
                 {
                     SelectedHolderType = dbcontext.HolderTypes.FirstOrDefault(p => p.Id == Holder.HolderTypeId);
-                }
-                
+
+                    IsNotLoaded = !dbcontext.HolderFilms.Any(p => p.HolderId == Holder.Id);
+                }                
             }
+
+            OnPropertyChanged(() => IsNotLoaded);
         }
 
     }
