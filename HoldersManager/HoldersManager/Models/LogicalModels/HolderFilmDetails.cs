@@ -8,6 +8,7 @@ namespace HoldersManager.Models
     {
         public int Id { get; set; }
 
+        public int Number { get; set; }
         // holder infos
         public int HolderId { get; set; }
         public string HolderName { get; set; }

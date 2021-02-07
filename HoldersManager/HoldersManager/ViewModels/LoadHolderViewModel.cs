@@ -67,12 +67,12 @@ namespace HoldersManager.ViewModels
                 var holder = dbcontext.Holders.FirstOrDefault(p => p.Id == int.Parse(HolderId));
                 
                 // Loop based on the number of frames that the holder can contains
-                for(int i = 0; i < holder.NumberOfFrames; i++)
+                for(int i = 1; i <= holder.NumberOfFrames; i++)
                 {
                     // Create the film
                     var film = new Film { CreationDate = DateTime.Now, FilmTypeId = SelectedFilmType.Id, Comments = Comments };
 
-                    var holderFilm = new HolderFilm { CreationDate = DateTime.Now, Film = film, Holder = holder };
+                    var holderFilm = new HolderFilm { CreationDate = DateTime.Now, Film = film, Holder = holder, Number = i };
                     
                     dbcontext.HolderFilms.Add(holderFilm);
 

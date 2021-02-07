@@ -8,11 +8,16 @@
             <conv:IsExposedToBorderColorConverter x:Key="IsExposedToBorderColor" />
         </ResourceDictionary>
     </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Edit" Command="{Binding EditCommand}" />
+        <ToolbarItem Text="Load" Command="{Binding LoadCommand}" IsEnabled="{Binding IsUnloaded}"/>
+        <ToolbarItem Text="Development" Command="{Binding DevelopmentCommand}" IsEnabled="{Binding IsExposed}"/>
+    </ContentPage.ToolbarItems>
 
     <StackLayout>
         <!-- Entête-->
         <StackLayout Orientation="Horizontal">
-            <Label Text="Holder type :"></Label>
+            <Label Text="Holder type :"></Label>            
             <Label FontAttributes="Bold" Text="{Binding HolderType.Name}"></Label>
         </StackLayout>
         <StackLayout Orientation="Horizontal">
@@ -27,7 +32,7 @@
             <Label Text="Comments :"></Label>
             <Label FontAttributes="Bold" Text="{Binding Holder.Comments}"></Label>
         </StackLayout>
-        <Grid>
+        <!--<Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -39,7 +44,7 @@
             <Button Grid.Column="0" Text="Edit" Command="{Binding EditCommand}"/>
             <Button Grid.Column="1" Text="Load" Command="{Binding LoadCommand}" IsEnabled="{Binding IsUnloaded}"/>
             <Button Grid.Column="2" Text="Development" Command="{Binding DevelopmentCommand}" IsEnabled="{Binding IsExposed}"></Button>
-        </Grid>
+        </Grid>-->
 
         <!-- Liste des films chargés -->
         <ListView x:Name="MyListView"
@@ -54,15 +59,19 @@
                     <ViewCell>
                         <Frame BorderColor="{Binding IsExposed, Converter={StaticResource IsExposedToBorderColor}}" Margin="2"  >
                             <StackLayout >
-                                <Label Text="{Binding FilmName}" FontAttributes="Bold" 
-                                    Style="{DynamicResource ListItemTextStyle}" />
                                 <StackLayout Orientation="Horizontal">
-                                    <Label Text="ISO : " />
+                                    <Label FontAttributes="Bold" Text="{Binding Number}" Style="{DynamicResource ListItemTextStyle}"></Label>
+                                    <Label FontAttributes="Bold" Text="-" Style="{DynamicResource ListItemTextStyle}"></Label>
+                                    <Label Text="{Binding FilmName}" FontAttributes="Bold" 
+                                        Style="{DynamicResource ListItemTextStyle}" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="ISO : " Style="{DynamicResource ListItemTextStyle}"/>
                                     <Label Text="{Binding ISO}" 
                                         Style="{DynamicResource ListItemDetailTextStyle}"/>
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal">
-                                    <Label Text="Last exposed on : " />
+                                    <Label Text="Last exposed on : " Style="{DynamicResource ListItemTextStyle}"/>
                                     <Label Text="{Binding ExposureDateTime}" 
                                         Style="{DynamicResource ListItemDetailTextStyle}"/>
                                 </StackLayout>

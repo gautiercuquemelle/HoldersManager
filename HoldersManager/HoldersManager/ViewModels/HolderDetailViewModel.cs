@@ -137,6 +137,7 @@ namespace HoldersManager.ViewModels
                         select new HolderFilmDetails
                         {
                             Id = hf.Id,
+                            Number = hf.Number,
                             HolderId = hf.HolderId,
                             HolderName = h.HolderName,
                             FilmId = hf.FilmId,

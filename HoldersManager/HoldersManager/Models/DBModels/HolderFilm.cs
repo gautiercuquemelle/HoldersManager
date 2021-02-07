@@ -11,6 +11,8 @@ namespace HoldersManager.Models
         public int Id { get; set; }
         public int FilmId { get; set; }
         public int HolderId { get; set; }
+
+        public int Number { get; set; }
         public DateTime CreationDate { get; set; }
 
         // Naviation properties
