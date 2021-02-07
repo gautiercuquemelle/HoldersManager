@@ -50,9 +50,36 @@ namespace HoldersManager.ViewModels
             }
         }
 
-        public string Location
+        //public string Location
+        //{
+        //    get => FilmExposure?.Location;
+        //}
+
+        public DateTime? ExposureDate
         {
-            get => FilmExposure?.Location;
+            get => FilmExposure?.ExposureDateTime.Date;
+            set
+            {
+                if (FilmExposure != null)
+                {
+                    FilmExposure.ExposureDateTime = (value.HasValue?value.Value.Date:DateTime.Now.Date).AddTicks(ExposureTime?.Ticks ?? 0); 
+                }
+
+                OnPropertyChanged(() => ExposureDate);
+            }
+        }
+
+        public TimeSpan? ExposureTime {
+            get => FilmExposure?.ExposureDateTime.TimeOfDay;
+            set
+            {
+                if (FilmExposure != null)
+                {
+                    FilmExposure.ExposureDateTime = new DateTime(FilmExposure.ExposureDateTime.Date.Ticks).AddTicks(value.Value.Ticks);
+                }
+
+                OnPropertyChanged(() => ExposureTime);
+            }
         }
 
         private List<Camera> _cameras;
@@ -143,8 +170,11 @@ namespace HoldersManager.ViewModels
                 else
                 {
                     SelectedCamera = Cameras.FirstOrDefault(p => p.Id == FilmExposure.CameraId);
-                    SelectedExposureUnit = ExposureUnits.FirstOrDefault(p => p.Id == FilmExposure.ExposureUnitId);
+                    SelectedExposureUnit = ExposureUnits.FirstOrDefault(p => p.Id == FilmExposure.ExposureUnitId);                    
                 }
+
+                OnPropertyChanged(() => ExposureDate);
+                OnPropertyChanged(() => ExposureTime);
             }            
         }
 
@@ -164,6 +194,7 @@ namespace HoldersManager.ViewModels
 
             FilmExposure.CameraId = SelectedCamera.Id;
             FilmExposure.ExposureUnitId = SelectedExposureUnit.Id;
+            //FilmExposure.ExposureDateTime = ExposureDateTime;
 
             using (var dbcontext = new HoldersManagerContext())
             {
@@ -214,7 +245,7 @@ namespace HoldersManager.ViewModels
                 {                    
                     Console.WriteLine($"Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
                     FilmExposure.Location = $"{location.Latitude}, {location.Longitude}";
-                    OnPropertyChanged(() => Location);
+                    //OnPropertyChanged(() => Location);
                 }
             }
             catch (Exception e)

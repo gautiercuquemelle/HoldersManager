@@ -19,7 +19,8 @@
 
                     <Label Text="Exposure date and time"/>
                     
-                    <local:DateTimePicker  DateTime="{Binding FilmExposure.ExposureDateTime, Mode=TwoWay}"/>
+                    <DatePicker  Date="{Binding ExposureDate, Mode=TwoWay}" />
+                    <TimePicker  Time="{Binding ExposureTime, Mode=TwoWay}" />
 
                     <Label Text="Aperture"/>
                     <Entry Text="{Binding FilmExposure.Aperture, Mode=TwoWay}" />
