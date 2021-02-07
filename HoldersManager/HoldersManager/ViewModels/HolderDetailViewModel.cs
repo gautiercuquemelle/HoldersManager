@@ -34,10 +34,10 @@ namespace HoldersManager.ViewModels
         public Holder Holder
         {
             get => _holder;
-            set 
+            set
             {
-                SetProperty(ref _holder, value); 
-                OnPropertyChanged(()=>HolderType);
+                SetProperty(ref _holder, value);
+                OnPropertyChanged(() => HolderType);
             }
         }
 
@@ -64,7 +64,7 @@ namespace HoldersManager.ViewModels
         {
             get => _holderFilms;
             set
-            { 
+            {
                 SetProperty(ref _holderFilms, value);
                 OnPropertyChanged(() => IsUnloaded);
             }
@@ -127,13 +127,13 @@ namespace HoldersManager.ViewModels
                 {
                     HolderType = dbcontext.HolderTypes.FirstOrDefault(p => p.Id == Holder.HolderTypeId);
 
-                    HolderFilms = new ObservableCollection<HolderFilmDetails>(
+                    var holderFilms = (
                         from hf in dbcontext.HolderFilms.Where(p => p.HolderId == Holder.Id)
                         join h in dbcontext.Holders on hf.HolderId equals h.Id
                         join f in dbcontext.Films on hf.FilmId equals f.Id
                         join ft in dbcontext.FilmTypes on f.FilmTypeId equals ft.Id
-                        join FE in dbcontext.FilmExposures on f.Id equals FE.FilmId into fedefault
-                        from fe in fedefault.DefaultIfEmpty()
+                        //join FE in dbcontext.FilmExposures on f.Id equals FE.FilmId into fedefault
+                        //from fe in fedefault.DefaultIfEmpty()
                         select new HolderFilmDetails
                         {
                             Id = hf.Id,
@@ -142,9 +142,16 @@ namespace HoldersManager.ViewModels
                             FilmId = hf.FilmId,
                             FilmName = ft.Name,
                             ISO = ft.ISO,
-                            ExposureDateTime = fe.ExposureDateTime,
                             Comments = f.Comments
-                        });
+                        }).ToList();
+
+                    holderFilms.ForEach(p =>
+                    {
+                        p.ExposureDateTime = GetFilmAstExposureDateTime(dbcontext, p.FilmId);
+                        p.IsExposed = p.ExposureDateTime.HasValue;
+                    });
+
+                    HolderFilms = new ObservableCollection<HolderFilmDetails>(holderFilms);
                 }
                 else
                 {
@@ -152,6 +159,13 @@ namespace HoldersManager.ViewModels
                     Shell.Current.SendBackButtonPressed();
                 }
             }
+        }
+
+        private DateTime? GetFilmAstExposureDateTime(HoldersManagerContext dbcontext, int filmId)
+        {
+            return dbcontext.FilmExposures.Where(p => p.FilmId == filmId)
+                            .OrderByDescending(p => p.ExposureDateTime)
+                            .FirstOrDefault()?.ExposureDateTime;
         }
 
         private async void OnHolderFilmSelected(HolderFilmDetails holderFilm)

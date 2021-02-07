@@ -93,7 +93,7 @@ namespace HoldersManager.ViewModels
                 FilmExposures = dbcontext.FilmExposures.Where(p=>p.FilmId == HolderFilm.FilmId).ToList();
                 FilmExposures.ForEach(p => 
                 {
-                    p.Camera = dbcontext.Cameras.FirstOrDefault(fe => fe.Id == p.CameraId);                    
+                    p.Camera = dbcontext.Cameras.FirstOrDefault(fe=>fe.Id == p .CameraId);
                 });
             }
         }

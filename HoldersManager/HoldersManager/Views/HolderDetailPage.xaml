@@ -1,7 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:conv="clr-namespace:HoldersManager.Converters"
              x:Class="HoldersManager.Views.HolderDetailPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:IsExposedToBorderColorConverter x:Key="IsExposedToBorderColor" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <StackLayout>
         <!-- Entête-->
@@ -46,22 +52,24 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout>
-                            <Label Text="{Binding FilmName}" FontAttributes="Bold" 
-                                Style="{DynamicResource ListItemTextStyle}" />
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="ISO : " />
-                                <Label Text="{Binding ISO}" 
-                                    Style="{DynamicResource ListItemDetailTextStyle}"/>
+                        <Frame BorderColor="{Binding IsExposed, Converter={StaticResource IsExposedToBorderColor}}" Margin="2"  >
+                            <StackLayout >
+                                <Label Text="{Binding FilmName}" FontAttributes="Bold" 
+                                    Style="{DynamicResource ListItemTextStyle}" />
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="ISO : " />
+                                    <Label Text="{Binding ISO}" 
+                                        Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Last exposed on : " />
+                                    <Label Text="{Binding ExposureDateTime}" 
+                                        Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                </StackLayout>
+                                <Label Text="{Binding Comments}" 
+                                        Style="{DynamicResource ListItemDetailTextStyle}"/>
                             </StackLayout>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="Exposed on : " />
-                                <Label Text="{Binding ExposureDate}" 
-                                    Style="{DynamicResource ListItemDetailTextStyle}"/>
-                            </StackLayout>
-                            <Label Text="{Binding Comments}" 
-                                    Style="{DynamicResource ListItemDetailTextStyle}"/>
-                        </StackLayout>
+                        </Frame>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

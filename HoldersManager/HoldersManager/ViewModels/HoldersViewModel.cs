@@ -93,7 +93,7 @@ namespace HoldersManager.ViewModels
             return (from hf in dbContext.HolderFilms.Where(p => p.HolderId == holderId)
                     join f in dbContext.Films on hf.FilmId equals f.Id
                     join e in dbContext.FilmExposures on f.Id equals e.FilmId
-                    select e.Id).Count();
+                    select f.Id).Distinct().Count();
         }
 
         public void OnAppearing()

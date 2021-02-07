@@ -18,5 +18,6 @@ namespace HoldersManager.Models
         public int ISO { get; set; }
         public DateTime? ExposureDateTime { get; set; }
         public string Comments { get; set; }
+        public bool IsExposed { get; set; }
     }
 }

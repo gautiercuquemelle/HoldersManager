@@ -125,13 +125,19 @@ namespace HoldersManager.ViewModels
                 if (Holder == null)
                 {
                     Holder = new Holder { }; // Creation mode
+                    
+                    if (HolderTypes.Count == 1)
+                        SelectedHolderType = HolderTypes.First(); // Defaultvalue for holder type field
                 }
                 else
                 {
                     SelectedHolderType = dbcontext.HolderTypes.FirstOrDefault(p => p.Id == Holder.HolderTypeId);
 
                     IsNotLoaded = !dbcontext.HolderFilms.Any(p => p.HolderId == Holder.Id);
-                }                
+                }
+
+                
+                    
             }
 
             OnPropertyChanged(() => IsNotLoaded);
