@@ -11,7 +11,8 @@
             <Button Text="Film types" Command="{Binding FilmTypesCommand}"></Button>
             <Button Text="Cameras" Command="{Binding CamerasCommand}"></Button>
             <Button Text="Exposure units" Command="{Binding ExposureUnitsCommand}"></Button>
-            <Button Text="Developers" Command="{Binding DevelopersCommand}"></Button>            
+            <Button Text="Developers" Command="{Binding DevelopersCommand}"></Button>
+            <Button Text="Recreate BDD" BackgroundColor="OrangeRed" Command="{Binding RecreateBddCommand}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

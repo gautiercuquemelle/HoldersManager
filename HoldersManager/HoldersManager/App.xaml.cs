@@ -30,7 +30,7 @@ namespace HoldersManager
 
                 //dbcontext.SaveChangesAsync().Wait();
 
-                var initAsync = dbcontext.InitializeEmptyDb();
+                var initAsync = dbcontext.InitializeEmptyDbAsync();
                 initAsync.Wait();
 
                 Debug.WriteLine($"Elements config créés : {initAsync.Result}");

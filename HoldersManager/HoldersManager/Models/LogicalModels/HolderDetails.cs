@@ -14,10 +14,12 @@ namespace HoldersManager.Models
         public int NumberOfFrames { get; set; }
         public int NumberOfLoadedFrames { get; set; }
         public int NumberOfExposedFrames { get; set; }
-        public decimal LoadingRatio { get => NumberOfFrames != 0 ? NumberOfLoadedFrames / NumberOfFrames : 0; }
-        public decimal ExposureRatio { get => NumberOfFrames != 0 ? NumberOfExposedFrames / NumberOfFrames : 0; }
+        public decimal LoadingRatio { get => NumberOfFrames != 0 ? (decimal)NumberOfLoadedFrames / (decimal)NumberOfFrames : 0; }
+        public decimal ExposureRatio { get => NumberOfFrames != 0 ? (decimal)NumberOfExposedFrames / (decimal)NumberOfFrames : 0; }
         public bool DiscardAfterDevelopment { get; set; }
         public string Comments { get; set; }
+        public bool IsLoaded { get => NumberOfLoadedFrames > 0; }
+        public bool IsExposed { get => NumberOfExposedFrames > 0; }
 
 
     }

@@ -1,8 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:HoldersManager.Components"
              x:Class="HoldersManager.Views.HolderFilmDetailPage">
     <ContentPage.ToolbarItems>
+        
         <ToolbarItem Text="Exposure" Command="{Binding AddExposureCommand}"/>
         <ToolbarItem Text="Development" Command="{Binding DevelopmentCommand}"/>
         <ToolbarItem Text="Unload" Command="{Binding UnloadCommand}"/>
@@ -10,45 +12,56 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Infos" FontAttributes="Bold"/>
-            <Label Text="{Binding Film.FilmName}" FontAttributes="Bold" Style="{DynamicResource ListItemTextStyle}" />
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Film type :" Style="{DynamicResource ListItemTextStyle}" />
+                <Label Text="{Binding FilmType.Name}" FontAttributes="Bold" Style="{DynamicResource ListItemTextStyle}" />
+                <Button Text="Edit Film"></Button>
+            </StackLayout>
             <Label Text="{Binding Film.Comments}" FontAttributes="Bold" Style="{DynamicResource ListItemTextStyle}" />
-
+            <Button Text="Load" Command="{Binding LoadCommand}" IsVisible="{Binding IsNotLoaded, Mode=TwoWay}"/>
+            <Button Text="Unload" Command="{Binding UnLoadCommand}" IsVisible="{Binding IsLoaded, Mode=TwoWay}"/>
             <Label Text="Exposures" FontAttributes="Bold"/>
             <Label Text="No exposure" IsVisible="{Binding HasNoExposure}"/>
             <ListView x:Name="MyListView"
                 ItemsSource="{Binding FilmExposures}"
                 SelectedItem="{Binding SelectedFilmExposure, Mode=TwoWay}"
                 CachingStrategy="RecycleElement"  
-                RowHeight="140" >
+                SeparatorVisibility="None"
+                RowHeight="190" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout>
-                                <StackLayout Orientation="Horizontal">
-                                    <Label Text="Camera : " />
-                                    <Label Text="{Binding Camera.Name}" 
-                                    Style="{DynamicResource ListItemDetailTextStyle}"/>
+                            <Frame Margin="2" BorderColor="Green">
+                                <StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="Camera :" Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                        <Label Text="{Binding Camera.Name}" 
+                                        Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="Exposed on :" Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                        <Label Text="{Binding ExposureDateTime}" 
+                                        Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="Aperture :" Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                        <Label Text="{Binding ExposureDateTime}" 
+                                        Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="Exposure time :" Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                        <Label Text="{Binding ExposureDateTime}" 
+                                        Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                        <Label Text="{Binding ExposureUnit.Name}" 
+                                        Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="Comments :" Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                        <Label Text="{Binding Comments}" 
+                                        Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                    </StackLayout>
                                 </StackLayout>
-                                <StackLayout Orientation="Horizontal">
-                                    <Label Text="Exposed on : " />
-                                    <Label Text="{Binding ExposureDateTime}" 
-                                    Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                </StackLayout>
-                                <StackLayout Orientation="Horizontal">
-                                    <Label Text="Aperture : " />
-                                    <Label Text="{Binding ExposureDateTime}" 
-                                    Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                </StackLayout>
-                                <StackLayout Orientation="Horizontal">
-                                    <Label Text="Exposure time : " />
-                                    <Label Text="{Binding ExposureDateTime}" 
-                                    Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                    <Label Text="{Binding ExposureUnit.Name}" 
-                                    Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                </StackLayout>
-                                <Label Text="{Binding Comments}" 
-                                    Style="{DynamicResource ListItemDetailTextStyle}"/>
-                            </StackLayout>
+                            </Frame>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

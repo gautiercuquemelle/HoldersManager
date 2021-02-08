@@ -151,8 +151,15 @@ namespace HoldersManager.ViewModels
                         p.ExposureDateTime = GetFilmAstExposureDateTime(dbcontext, p.FilmId);
                         p.IsExposed = p.ExposureDateTime.HasValue;
                     });
+                                      
 
-                    HolderFilms = new ObservableCollection<HolderFilmDetails>(holderFilms);
+                    for(int i = 1; i <= Holder.NumberOfFrames; i++)
+                    {
+                        if (!holderFilms.Any(p => p.Number == i))
+                            holderFilms.Add(new HolderFilmDetails { Id = 0, Comments = "Not loaded", Number = i });
+                    }
+
+                    HolderFilms = new ObservableCollection<HolderFilmDetails>(holderFilms.OrderBy(p => p.Number));
                 }
                 else
                 {
@@ -175,7 +182,7 @@ namespace HoldersManager.ViewModels
                 return;
 
             // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(HolderFilmDetailPage)}?{nameof(HolderFilmDetailViewModel.HolderFilmId)}={holderFilm.Id}");
+            await Shell.Current.GoToAsync($"{nameof(HolderFilmDetailPage)}?{nameof(HolderFilmDetailViewModel.HolderFilmId)}={holderFilm.Id}&{nameof(HolderFilmDetailViewModel.HolderId)}={HolderId}&{nameof(HolderFilmDetailViewModel.HolderFilmNumber)}={holderFilm.Number}");
 
             SelectedHolderFilm = null;
         }

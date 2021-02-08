@@ -9,12 +9,18 @@ using Xamarin.Forms;
 
 namespace HoldersManager.ViewModels
 {
-    [QueryProperty(nameof(HolderFilmId), nameof(HolderFilmId))]
+    [QueryProperty(nameof(HolderFilmId), nameof(HolderFilmId))]    
+    [QueryProperty(nameof(HolderId), nameof(HolderId))]
+    [QueryProperty(nameof(HolderFilmNumber), nameof(HolderFilmNumber))]
     public class HolderFilmDetailViewModel : BaseViewModel
     {
         public Command AddExposureCommand { get; set; }
         public Command DevelopmentCommand { get; set; }
         public Command UnloadCommand { get; set; }
+        public Command LoadCommand { get; set; }
+
+        public string HolderFilmNumber { get; set; } = "0";
+        public string HolderId { get; set; } = "0";
 
         private string _holderFilmId;
         public string HolderFilmId
@@ -31,8 +37,13 @@ namespace HoldersManager.ViewModels
         public HolderFilm HolderFilm
         {
             get => _holderFilm;
-            set { SetProperty(ref _holderFilm, value);
-                OnPropertyChanged(() => HolderFilm); }
+            set 
+            {
+                SetProperty(ref _holderFilm, value);
+
+                OnPropertyChanged(() => IsLoaded);
+                OnPropertyChanged(() => IsNotLoaded);
+            }
         }
 
         private Film _film;
@@ -42,7 +53,16 @@ namespace HoldersManager.ViewModels
             set
             {
                 SetProperty(ref _film, value);
-                OnPropertyChanged(() => Film);
+            }
+        }
+
+        private FilmType _filmType;
+        public FilmType FilmType
+        {
+            get => _filmType;
+            set
+            {
+                SetProperty(ref _filmType, value);
             }
         }
 
@@ -69,6 +89,16 @@ namespace HoldersManager.ViewModels
             }
         }
 
+        public bool IsLoaded
+        {
+            get => HolderFilm != null;
+        }
+
+        public bool IsNotLoaded
+        {
+            get => !IsLoaded;
+        }
+
         public bool HasNoExposure
         {
             get
@@ -82,20 +112,50 @@ namespace HoldersManager.ViewModels
             AddExposureCommand = new Command(OnAddExposure);
             DevelopmentCommand = new Command(OnDevelopment);
             UnloadCommand= new Command(OnUnload);
+            LoadCommand = new Command(OnLoad);
         }
 
         private void LoadHolderFilmDetails(string holderFilmId)
         {
             using (var dbcontext = new HoldersManagerContext())
             {
-                HolderFilm = dbcontext.HolderFilms.FirstOrDefault(p=>p.Id == int.Parse(holderFilmId));
-                Film = dbcontext.Films.FirstOrDefault(p => p.Id == HolderFilm.FilmId);
-                FilmExposures = dbcontext.FilmExposures.Where(p=>p.FilmId == HolderFilm.FilmId).ToList();
-                FilmExposures.ForEach(p => 
+                HolderFilm = dbcontext.HolderFilms.FirstOrDefault(p => p.Id == int.Parse(holderFilmId));
+
+                if(HolderFilm == null)
+                    HolderFilm = dbcontext.HolderFilms.FirstOrDefault(p => p.Number == int.Parse(HolderFilmNumber) && p.HolderId == int.Parse(HolderId));
+                
+                if (HolderFilm != null)
                 {
-                    p.Camera = dbcontext.Cameras.FirstOrDefault(fe=>fe.Id == p .CameraId);
-                });
+                    Film = dbcontext.Films.FirstOrDefault(p => p.Id == HolderFilm.FilmId);
+                    FilmType = dbcontext.FilmTypes.FirstOrDefault(p => p.Id == Film.FilmTypeId);
+                    FilmExposures = dbcontext.FilmExposures.Where(p => p.FilmId == HolderFilm.FilmId).ToList();
+                    FilmExposures.ForEach(p =>
+                    {
+                        p.Camera = dbcontext.Cameras.FirstOrDefault(fe => fe.Id == p.CameraId);
+                    });
+                }
+                else
+                {
+                    //HolderFilm = new HolderFilm { Number=int.Parse(HolderFilmNumber)}
+                    FilmExposures = new List<FilmExposure>(); 
+                }
             }
+        }
+
+        private async void OnLoad()
+        {
+            //using (var dbcontext = new HoldersManagerContext())
+            //{
+            //    if (dbcontext.HolderFilms.Any(p => p.HolderId == Holder.Id))
+            //    {
+            //        DisplayAlert("Error", "Can't load a partially loaded holder", "OK");
+            //        return;
+            //    }
+            //}
+            if(HolderFilm!=null)
+                await Shell.Current.GoToAsync($"{nameof(LoadHolderPage)}?{nameof(LoadHolderViewModel.HolderId)}={HolderFilm.HolderId}&{nameof(LoadHolderViewModel.HolderFilmNumber)}={HolderFilm.Number}");
+            else
+                await Shell.Current.GoToAsync($"{nameof(LoadHolderPage)}?{nameof(LoadHolderViewModel.HolderId)}={HolderId}&{nameof(LoadHolderViewModel.HolderFilmNumber)}={HolderFilmNumber}");
         }
 
         private async void OnAddExposure()

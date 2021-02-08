@@ -51,7 +51,8 @@
             ItemsSource="{Binding HolderFilms}"
             SelectedItem="{Binding SelectedHolderFilm}"
             CachingStrategy="RecycleElement"  
-            RowHeight="120" >
+            RowHeight="120"
+            SeparatorVisibility="None">
 
             <!--Custom View Cells-->
             <ListView.ItemTemplate>

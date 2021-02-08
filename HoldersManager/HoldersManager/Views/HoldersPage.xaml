@@ -6,6 +6,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <conv:PercentToStringConverter x:Key="PercentToString" />
+            <conv:IsExposedToBorderColorConverter x:Key="IsExposedToBorderColor" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
@@ -18,34 +19,37 @@
                   ItemsSource="{Binding Holders}" 
                   SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                   CachingStrategy="RecycleElement" 
-                  RowHeight="120"
-                  SeparatorColor="Black" >
+                  RowHeight="130"
+                  SeparatorColor="Black" SeparatorVisibility="None"
+                  Margin="0,2,0,0">
 
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell >
-                        <StackLayout >
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding HolderName}" FontAttributes="Bold"
+                        <Frame Margin="4" Padding="6" BorderColor="DarkGray">
+                            <StackLayout >
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding HolderName}" FontAttributes="Bold"
                                 Style="{DynamicResource ListItemTextStyle}" />
-                                <Label Text=" - " 
+                                    <Label Text=" - " 
                                 Style="{DynamicResource ListItemTextStyle}" />
-                                <Label Text="{Binding HolderTypeName}" 
+                                    <Label Text="{Binding HolderTypeName}" 
                                 Style="{DynamicResource ListItemTextStyle}" />
-                            </StackLayout>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="Loading ratio :" Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                <Label Text="{Binding LoadingRatio, Converter={StaticResource PercentToString}}" 
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Loading ratio :" Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                    <Label Text="{Binding LoadingRatio, Converter={StaticResource PercentToString}}" 
                                     Style="{DynamicResource ListItemDetailTextStyle}"/>
-                            </StackLayout>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="Exposure ratio :" Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                <Label Text="{Binding ExposureRatio, Converter={StaticResource PercentToString}}" 
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Exposure ratio :" Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                    <Label Text="{Binding ExposureRatio, Converter={StaticResource PercentToString}}" 
                                     Style="{DynamicResource ListItemDetailTextStyle}"/>
-                            </StackLayout>
-                            <Label Text="{Binding Comments}" 
+                                </StackLayout>
+                                <Label Text="{Binding Comments}" FontAttributes="Italic" 
                                 Style="{DynamicResource ListItemDetailTextStyle}"/>
-                        </StackLayout>
+                            </StackLayout>
+                        </Frame>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

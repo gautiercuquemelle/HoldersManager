@@ -50,7 +50,7 @@ namespace HoldersManager.Services
                 .Navigation<ExposureUnit>(p => p.ExposureUnit).AutoInclude(true);
         }
 
-        async public Task<int> InitializeEmptyDb()
+        async public Task<int> InitializeEmptyDbAsync()
         {
             if(await HolderTypes.CountAsync() == 0)
             {
