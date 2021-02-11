@@ -12,6 +12,8 @@ namespace HoldersManager.Services
 {
     public class HoldersManagerContext : DbContext
     {
+        const int SCHEMA_VERSION_NUMBER = 1;
+
         public DbSet<Camera> Cameras { get; set; }
         public DbSet<Developer> Developers { get; set; }
         public DbSet<ExposureUnit> ExposureUnits { get; set; }
@@ -22,12 +24,12 @@ namespace HoldersManager.Services
         public DbSet<Holder> Holders { get; set; }
         public DbSet<HolderFilm> HolderFilms { get; set; }
         public DbSet<HolderType> HolderTypes { get; set; }
+        public DbSet<SchemaVersion> SchemaVersions { get; set; }
 
         public HoldersManagerContext()
         {
             SQLitePCL.Batteries_V2.Init();
-            //this.Database.EnsureDeleted();
-            this.Database.EnsureCreated();            
+            
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -90,14 +92,43 @@ namespace HoldersManager.Services
                 Holders.Add(new Holder { CreationDate=DateTime.Now, HolderTypeId=HolderTypes.FirstOrDefault().Id, HolderName="Demo holder", NumberOfFrames=2, DiscardAfterDevelopment=false, Comments="Généré automatiquement" });
             }
 
+            if (await SchemaVersions.CountAsync() == 0)
+                SchemaVersions.Add(new SchemaVersion { VersionNumber = SCHEMA_VERSION_NUMBER });
+
             cptChanges += await SaveChangesAsync();
 
             return cptChanges;
-        }        
+        }
 
-        //async public void UpdateSchema()
-        //{
-        //    await base.Database.ExecuteSqlRawAsync("");
-        //}
+        async public Task EnsureSchemaIsUpToDate()
+        {
+            int currentVersion = 0;
+            try
+            {
+                currentVersion = SchemaVersions.FirstOrDefault().VersionNumber;
+            }
+            catch
+            {
+                // No Table Version -> Version 0
+            }
+
+            if(currentVersion == 0)
+            {
+                currentVersion = await UpdateSchemaToVersion_1();                
+            }
+
+            
+        }
+
+        async private Task<int> UpdateSchemaToVersion_1()
+        {
+            var rawScript = "CREATE TABLE SchemaVersions (VersionNumber int PRIMARY KEY NOT NULL);";
+
+            await Database.ExecuteSqlRawAsync(rawScript);
+            SchemaVersions.Add(new SchemaVersion { VersionNumber = 1 });
+            await SaveChangesAsync();
+
+            return 1;
+        }
     }
 }
