@@ -51,34 +51,38 @@
             ItemsSource="{Binding HolderFilms}"
             SelectedItem="{Binding SelectedHolderFilm}"
             CachingStrategy="RecycleElement"  
-            RowHeight="120"
-            SeparatorVisibility="None">
+            RowHeight="130"
+            SeparatorVisibility="None" >
 
             <!--Custom View Cells-->
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Frame BorderColor="{Binding IsExposed, Converter={StaticResource IsExposedToBorderColor}}" Margin="2"  >
-                            <StackLayout >
-                                <StackLayout Orientation="Horizontal">
-                                    <Label FontAttributes="Bold" Text="{Binding Number}" Style="{DynamicResource ListItemTextStyle}"></Label>
-                                    <Label FontAttributes="Bold" Text="-" Style="{DynamicResource ListItemTextStyle}"></Label>
-                                    <Label Text="{Binding FilmName}" FontAttributes="Bold" 
-                                        Style="{DynamicResource ListItemTextStyle}" />
+                        <Frame BorderColor="{Binding IsExposed, Converter={StaticResource IsExposedToBorderColor}}"
+                               BackgroundColor="{Binding IsExposed, Converter={StaticResource IsExposedToBorderColor}}"
+                               Margin="2" Padding="0" >
+                            <Frame BorderColor="{Binding IsExposed, Converter={StaticResource IsExposedToBorderColor}}" Margin="2"  >
+                                <StackLayout >
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label FontAttributes="Bold" Text="{Binding Number}" Style="{DynamicResource ListItemTextStyle}"></Label>
+                                        <Label FontAttributes="Bold" Text="-" Style="{DynamicResource ListItemTextStyle}"></Label>
+                                        <Label Text="{Binding FilmName}" FontAttributes="Bold" 
+                                            Style="{DynamicResource ListItemTextStyle}" />
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="ISO : " Style="{DynamicResource ListItemTextStyle}"/>
+                                        <Label Text="{Binding ISO}" 
+                                            Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="Last exposed on : " Style="{DynamicResource ListItemTextStyle}"/>
+                                        <Label Text="{Binding ExposureDateTime}" 
+                                            Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                    </StackLayout>
+                                    <Label Text="{Binding Comments}" 
+                                            Style="{DynamicResource ListItemDetailTextStyle}"/>
                                 </StackLayout>
-                                <StackLayout Orientation="Horizontal">
-                                    <Label Text="ISO : " Style="{DynamicResource ListItemTextStyle}"/>
-                                    <Label Text="{Binding ISO}" 
-                                        Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                </StackLayout>
-                                <StackLayout Orientation="Horizontal">
-                                    <Label Text="Last exposed on : " Style="{DynamicResource ListItemTextStyle}"/>
-                                    <Label Text="{Binding ExposureDateTime}" 
-                                        Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                </StackLayout>
-                                <Label Text="{Binding Comments}" 
-                                        Style="{DynamicResource ListItemDetailTextStyle}"/>
-                            </StackLayout>
+                            </Frame>
                         </Frame>
                     </ViewCell>
                 </DataTemplate>

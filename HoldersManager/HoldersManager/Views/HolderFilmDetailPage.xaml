@@ -27,40 +27,42 @@
                 SelectedItem="{Binding SelectedFilmExposure, Mode=TwoWay}"
                 CachingStrategy="RecycleElement"  
                 SeparatorVisibility="None"
-                RowHeight="190" >
+                RowHeight="195" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Frame Margin="2" BorderColor="Green">
-                                <StackLayout>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="Camera :" Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                        <Label Text="{Binding Camera.Name}" 
-                                        Style="{DynamicResource ListItemDetailTextStyle}"/>
+                            <Frame Margin="2" BorderColor="Green" Padding="0" BackgroundColor="Green">
+                                <Frame BorderColor="Green" Margin="2">
+                                    <StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Camera :" Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                            <Label Text="{Binding Camera.Name}" 
+                                            Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Exposed on :" Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                            <Label Text="{Binding ExposureDateTime}" 
+                                            Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Aperture :" Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                            <Label Text="{Binding ExposureDateTime}" 
+                                            Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Exposure time :" Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                            <Label Text="{Binding ExposureDateTime}" 
+                                            Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                            <Label Text="{Binding ExposureUnit.Name}" 
+                                            Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Comments :" Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                            <Label Text="{Binding Comments}" 
+                                            Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                        </StackLayout>
                                     </StackLayout>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="Exposed on :" Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                        <Label Text="{Binding ExposureDateTime}" 
-                                        Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                    </StackLayout>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="Aperture :" Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                        <Label Text="{Binding ExposureDateTime}" 
-                                        Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                    </StackLayout>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="Exposure time :" Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                        <Label Text="{Binding ExposureDateTime}" 
-                                        Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                        <Label Text="{Binding ExposureUnit.Name}" 
-                                        Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                    </StackLayout>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="Comments :" Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                        <Label Text="{Binding Comments}" 
-                                        Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                    </StackLayout>
-                                </StackLayout>
+                                </Frame>
                             </Frame>
                         </ViewCell>
                     </DataTemplate>
