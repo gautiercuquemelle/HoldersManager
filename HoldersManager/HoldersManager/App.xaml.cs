@@ -12,7 +12,8 @@ namespace HoldersManager
     {
 
         public App()
-        {
+        {            
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mzk4MTU1QDMxMzgyZTM0MmUzMEhJbE1tSzRCd0laSVBFdGtzSk00cVJqdFhDN3h1TXBkNGUzYlIySkN2U1E9");
             InitializeComponent();
 
             using (var dbcontext = new HoldersManagerContext())
