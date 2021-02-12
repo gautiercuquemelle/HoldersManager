@@ -10,7 +10,7 @@ using Xamarin.Forms;
 
 namespace HoldersManager.ViewModels
 {
-    public abstract class ConfigListBaseViewModel<T> : BaseViewModel  where T : BaseConfigModel  
+    public abstract class ConfigListBaseViewModel<T> : BaseViewModel where T : BaseConfigModel
     {
         public ObservableCollection<T> Items { get; set; }
         public Command LoadItemsCommand { get; }
@@ -25,6 +25,22 @@ namespace HoldersManager.ViewModels
             AddItemCommand = new Command(OnAddItem);
 
             ExecuteLoadItemsCommand();
+
+            Items.CollectionChanged += Items_CollectionChanged;
+        }
+
+        private void Items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            using (var dbContext = new HoldersManagerContext())
+            {
+                for (int i=0; i< Items.Count; i++)
+                {
+                    Items[i].Order = i;
+                    dbContext.Set<T>().Update(Items[i]);
+                }
+
+                dbContext.SaveChangesAsync().Wait();
+            }
         }
 
         protected void ExecuteLoadItemsCommand()
@@ -37,7 +53,7 @@ namespace HoldersManager.ViewModels
 
                 using (var dbContext = new HoldersManagerContext())
                 {
-                    var items = dbContext.Set<T>().ToList();
+                    var items = dbContext.Set<T>().OrderBy(p => p.Order).ToList();
                     foreach (var item in items)
                     {
                         Items.Add(item);
@@ -72,7 +88,7 @@ namespace HoldersManager.ViewModels
         }
 
         private async void OnAddItem(object obj)
-        {            
+        {
             await Shell.Current.GoToAsync(GetNavigationUriToEdit("0"));
         }
 

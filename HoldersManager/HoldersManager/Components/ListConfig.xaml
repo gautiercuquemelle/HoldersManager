@@ -1,30 +1,52 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sf="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              x:Class="HoldersManager.Components.ListConfig">
-  <ContentView.Content>
+    <ContentView.Content>
         <StackLayout>
 
             <!--<Button Grid.Column="1" Text="Add" Command="{Binding AddItemCommand}" Margin="0,5,0,10"/>-->
 
-            <ListView x:Name="MyListView"
-            ItemsSource="{Binding Items}"
-            SelectedItem="{Binding SelectedItem, Mode=TwoWay}"             
-            CachingStrategy="RecycleElement">
-
-
-                <ListView.ItemTemplate>
-                    <DataTemplate>
+            <sf:SfListView x:Name="MyListView"
+                    ItemsSource="{Binding Items}"
+                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}" 
+                    DragStartMode="OnDragIndicator, OnHold" 
+                           ItemSize="90" 
+            >
+                <sf:SfListView.DragDropController>
+                    <sf:DragDropController
+                        UpdateSource="True">
+                    </sf:DragDropController>
+                </sf:SfListView.DragDropController>
+                <sf:SfListView.ItemTemplate>
+                    <DataTemplate >
                         <ViewCell>
-                            <StackLayout>
-                                <Label Text="{Binding .}" VerticalOptions="FillAndExpand"  VerticalTextAlignment="Center"
-                                    Style="{DynamicResource ListItemTextStyle}" />
-                            </StackLayout>
+                            <Frame Margin="2" Padding="0" BorderColor="DarkGray" BackgroundColor="DarkGray">
+                                <Frame Margin="2" BorderColor="DarkGray">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="40"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" Text="{Binding .}" VerticalOptions="FillAndExpand"  VerticalTextAlignment="Center"
+                                               Style="{DynamicResource ListItemTextStyle}" />
+                                        <sf:DragIndicatorView Grid.Column="1" ListView="{x:Reference MyListView}" 
+                                                HorizontalOptions="Center" 
+                                                VerticalOptions="Center">
+
+                                            <!--<Label Text="D"/>-->
+                                            <Grid Padding="6">
+                                                <Image Source="icon_drag_handle.png"  />
+                                            </Grid>
+                                        </sf:DragIndicatorView>
+                                    </Grid>
+                                </Frame>
+                            </Frame>
                         </ViewCell>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-
-            </ListView>
+                </sf:SfListView.ItemTemplate>
+            </sf:SfListView>
         </StackLayout>
     </ContentView.Content>
 </ContentView>

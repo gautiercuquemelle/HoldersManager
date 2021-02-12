@@ -16,7 +16,7 @@ namespace HoldersManager
             InitializeComponent();
 
             using (var dbcontext = new HoldersManagerContext())
-            {             
+            {
                 if (dbcontext.Database.EnsureCreated())
                     dbcontext.InitializeEmptyDbAsync().Wait();
 

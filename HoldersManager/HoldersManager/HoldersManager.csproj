@@ -7,6 +7,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.2" />
+    <PackageReference Include="Syncfusion.Licensing" Version="18.4.0.42" />
+    <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.4.0.42" />
+    <PackageReference Include="Syncfusion.Xamarin.DataSource" Version="18.4.0.42" />
+    <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="18.4.0.42" />
+    <PackageReference Include="Syncfusion.Xamarin.SfMaps" Version="18.4.0.42" />
+    <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout" Version="18.4.0.42" />
+    <PackageReference Include="Syncfusion.Xamarin.SfRadialMenu" Version="18.4.0.42" />
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1451" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
   </ItemGroup>
@@ -28,9 +35,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Components\ListConfig.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Components\View1.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Config\CameraEditPage.xaml">
