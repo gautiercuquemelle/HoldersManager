@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HoldersManager.Views.AboutPage"
              xmlns:vm="clr-namespace:HoldersManager.ViewModels"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
              Title="{Binding Title}">
     
     <ContentPage.BindingContext>
@@ -15,7 +16,37 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid>
+    <StackLayout x:Name="stackLayout">
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Map" Clicked="Map_Clicked"/>
+            <Button Text="Hybrid" Clicked="Hybrid_Clicked"/>
+            <Button Text="Satelite" Clicked="Satelite_Clicked"/>
+        </StackLayout>
+        
+        <!--<maps:Map x:Name="map"
+              MapType="Hybrid" 
+              HasScrollEnabled="True" 
+              HasZoomEnabled="true" 
+              HorizontalOptions="FillAndExpand"
+              VerticalOptions="FillAndExpand" >
+        <x:Arguments>
+            <maps:MapSpan>
+                <x:Arguments>
+                    <maps:Position>
+                        <x:Arguments>
+                            <x:Double>36.9628066</x:Double>
+                            <x:Double>-122.0194722</x:Double>
+                        </x:Arguments>
+                    </maps:Position>
+                    <x:Double>0.01</x:Double>
+                    <x:Double>0.01</x:Double>
+                </x:Arguments>
+            </maps:MapSpan>
+        </x:Arguments>
+    </maps:Map>-->
+    </StackLayout>
+
+    <!--<Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -47,6 +78,6 @@
                         TextColor="White" />
             </StackLayout>
         </ScrollView>
-    </Grid>
+    </Grid>-->
 
 </ContentPage>

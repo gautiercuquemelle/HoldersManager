@@ -52,7 +52,7 @@ namespace HoldersManager.ViewModels
 
             using (var dbcontext = new HoldersManagerContext())
             {
-                FilmTypes = dbcontext.FilmTypes.ToList();
+                FilmTypes = dbcontext.FilmTypes.OrderBy(p => p.Order).ToList();
             }
         }
 

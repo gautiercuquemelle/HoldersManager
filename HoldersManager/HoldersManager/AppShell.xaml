@@ -26,15 +26,35 @@
             </Style>
             <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
             <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
+            <OnPlatform x:TypeArguments="x:String" x:Key="FontIcon">
+                <On Platform="Android" Value="HoldersManager.ttf#HoldersManager" />
+                <On Platform="iOS" Value="Sync FontIcons" />
+                <On Platform="UWP" Value="Sync FontIcons.ttf#Sync FontIcons"/>
+            </OnPlatform>
+            <FontImageSource x:Key="Holders_Icon"
+                             FontFamily="{StaticResource FontIcon}" Size="34" 
+                             Glyph="&#xe712;" 
+                             Color="White" />
         </ResourceDictionary>
     </Shell.Resources>
 
     <TabBar>
-        <ShellContent Title="Holders" Icon="icon_about.png" Route="HoldersPage" ContentTemplate="{DataTemplate local:HoldersPage}" />
-        <ShellContent Title="Films" Icon="icon_about.png" Route="FilmsPage" ContentTemplate="{DataTemplate local:FilmsPage}" />
-        <ShellContent Title="Config" Icon="icon_about.png" Route="ConfigPage" ContentTemplate="{DataTemplate local:ConfigPage}" />
+        <ShellContent Title="Holders"  Route="HoldersPage" ContentTemplate="{DataTemplate local:HoldersPage}" >
+            <ShellContent.Icon >
+                <FontImageSource FontFamily="{StaticResource FontIcon}" Glyph="&#xe712;" />
+            </ShellContent.Icon>
+        </ShellContent>
+        <ShellContent Title="Films" Route="FilmsPage" ContentTemplate="{DataTemplate local:FilmsPage}" >
+            <ShellContent.Icon >
+                <FontImageSource FontFamily="{StaticResource FontIcon}" Glyph="&#xe70e;" />
+            </ShellContent.Icon>
+        </ShellContent>
+        <ShellContent Title="Config"  Route="ConfigPage" ContentTemplate="{DataTemplate local:ConfigPage}" >
+            <ShellContent.Icon >
+                <FontImageSource FontFamily="{StaticResource FontIcon}" Glyph="&#xe70c;" />
+            </ShellContent.Icon>
+        </ShellContent>
         <ShellContent Title="About" Icon="icon_about.png" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
-        <!--<ShellContent Title="Browse" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:ItemsPage}" />-->
     </TabBar>
 
     <!--

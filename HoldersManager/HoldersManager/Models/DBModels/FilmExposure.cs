@@ -16,6 +16,8 @@ namespace HoldersManager.Models
         public decimal Exposure { get; set; }
         public int ExposureUnitId { get; set; }
         public string Location { get; set; }
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
         public string PreviewPath { get; set; }
         public string Comments { get; set; }
         public DateTime CreationDate { get; set; }

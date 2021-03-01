@@ -2,11 +2,30 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:HoldersManager.Components"
+             xmlns:sf="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:conv="clr-namespace:HoldersManager.Converters"
              x:Class="HoldersManager.Views.ExposurePage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Save" Command="{Binding SaveCommand}"/>
         <ToolbarItem Text="Cancel" Command="{Binding CancelCommand}"/>
     </ContentPage.ToolbarItems>
+
+    <ContentPage.Resources>
+        
+        <ResourceDictionary>
+            <OnPlatform x:TypeArguments="x:String" x:Key="FontIcon">
+                <On Platform="Android" Value="HoldersManager.ttf#HoldersManager" />
+                <On Platform="iOS" Value="Sync FontIcons" />
+                <On Platform="UWP" Value="Sync FontIcons.ttf#Sync FontIcons"/>
+            </OnPlatform>
+            <FontImageSource x:Key="Gps_Icon"
+                             FontFamily="{StaticResource FontIcon}" Size="34" 
+                             Glyph="&#xe706;" 
+                             Color="White" />
+
+            <conv:DoubleConverter x:Key="doubleConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.Content>
         <StackLayout>
@@ -34,23 +53,48 @@
                     SelectedItem="{Binding SelectedExposureUnit, Mode=TwoWay}"/>
 
                     <Label Text="Comments"/>
-                    <Editor Text="{Binding FilmExposure.Comments, Mode=TwoWay}" VerticalOptions="FillAndExpand" />
+                    <Editor Text="{Binding FilmExposure.Comments, Mode=TwoWay}"  />
 
                     <Label Text="Location"/>
+                    <Entry Text="{Binding FilmExposure.Location, Mode=TwoWay}" Grid.Column="0" VerticalOptions="FillAndExpand" HeightRequest="70"/>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Coordinates" VerticalTextAlignment="Center"/>
+                        <sf:SfButton Margin="0"
+                                     ShowIcon="True"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center"
+                                     ImageSource="{StaticResource Gps_Icon}"
+                                     BackgroundColor="Green"
+                                     ImageAlignment="End"
+                                     Text="GPS"
+                                     CornerRadius="4"
+                                     Command="{Binding LocateCommand}">
+
+                        </sf:SfButton>
+
+                    </StackLayout>
+                    
                     <Grid >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="6*"/>
-                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Entry Text="{Binding FilmExposure.Latitude, Mode=TwoWay, Converter={StaticResource doubleConverter}}" IsEnabled="False"   
+                               Grid.Column="0" Grid.Row="0"/>
+                        <Entry Text="{Binding FilmExposure.Longitude, Mode=TwoWay, Converter={StaticResource doubleConverter}}" IsEnabled="False" 
+                               Grid.Column="0" Grid.Row="1"/>
 
-                        <Entry Text="{Binding FilmExposure.Location, Mode=TwoWay}" Grid.Column="0" />
-                        <Button Text="Locate" Command="{Binding LocateCommand}" Grid.Column="1"/>
+                        <!--<Button Margin="0,10,0,10" Text="GPS" Command="{Binding LocateCommand}" Grid.Column="1" Grid.RowSpan="2">
+                            
+                        </Button>-->
+
+
                     </Grid>
-
-
-
-
-
                 </StackLayout>
             </ScrollView>
             <Grid Margin="0,0,0,10">

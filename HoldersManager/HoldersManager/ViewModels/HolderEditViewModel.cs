@@ -118,7 +118,7 @@ namespace HoldersManager.ViewModels
         {
             using (var dbcontext = new HoldersManagerContext())
             {
-                HolderTypes = dbcontext.HolderTypes.ToList();
+                HolderTypes = dbcontext.HolderTypes.OrderBy(p => p.Order).ToList();
 
                 Holder = dbcontext.Holders.FirstOrDefault(p => p.Id == int.Parse(holderId));
 

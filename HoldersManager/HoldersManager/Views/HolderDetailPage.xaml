@@ -16,21 +16,23 @@
 
     <StackLayout>
         <!-- Entête-->
-        <StackLayout Orientation="Horizontal">
-            <Label Text="Holder type :"></Label>            
-            <Label FontAttributes="Bold" Text="{Binding HolderType.Name}"></Label>
-        </StackLayout>
-        <StackLayout Orientation="Horizontal">
-            <Label Text="Holder name :"></Label>
-            <Label FontAttributes="Bold" Text="{Binding Holder.HolderName}"></Label>
-        </StackLayout>
-        <StackLayout Orientation="Horizontal">
-            <Label Text="Numer of frames :"></Label>
-            <Label FontAttributes="Bold" Text="{Binding Holder.NumberOfFrames}"></Label>
-        </StackLayout>
-        <StackLayout Orientation="Horizontal">
-            <Label Text="Comments :"></Label>
-            <Label FontAttributes="Bold" Text="{Binding Holder.Comments}"></Label>
+        <StackLayout Margin="3">
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Holder name :"></Label>
+                <Label FontAttributes="Bold" Text="{Binding Holder.HolderName}"></Label>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Holder type :"></Label>            
+                <Label FontAttributes="Bold" Text="{Binding HolderType.Name}"></Label>
+            </StackLayout>        
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Numer of frames :"></Label>
+                <Label FontAttributes="Bold" Text="{Binding Holder.NumberOfFrames}"></Label>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Comments :"></Label>
+                <Label FontAttributes="Bold" Text="{Binding Holder.Comments}"></Label>
+            </StackLayout>
         </StackLayout>
         <!--<Grid>
             <Grid.ColumnDefinitions>

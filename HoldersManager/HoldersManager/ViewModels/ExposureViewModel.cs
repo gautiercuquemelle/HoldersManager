@@ -244,8 +244,10 @@ namespace HoldersManager.ViewModels
                 if (location != null)
                 {                    
                     Console.WriteLine($"Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
-                    FilmExposure.Location = $"{location.Latitude}, {location.Longitude}";
-                    //OnPropertyChanged(() => Location);
+                    
+                    FilmExposure.Latitude = location.Latitude;
+                    FilmExposure.Longitude = location.Longitude;
+                    OnPropertyChanged(() => FilmExposure);                    
                 }
             }
             catch (Exception e)

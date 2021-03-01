@@ -12,7 +12,7 @@ namespace HoldersManager.Services
 {
     public class HoldersManagerContext : DbContext
     {
-        const int SCHEMA_VERSION_NUMBER = 2;
+        const int SCHEMA_VERSION_NUMBER = 3;
 
         public DbSet<Camera> Cameras { get; set; }
         public DbSet<Developer> Developers { get; set; }
@@ -120,8 +120,11 @@ namespace HoldersManager.Services
             {
                 currentVersion = await UpdateSchemaToVersion_2();
             }
+            if (currentVersion == 2)
+            {
+                currentVersion = await UpdateSchemaToVersion_3();
+            }
 
-            
         }
 
         async private Task<int> UpdateSchemaToVersion_1()
@@ -148,7 +151,20 @@ namespace HoldersManager.Services
             SchemaVersions.Update(schemaVersion);
             await SaveChangesAsync();
 
-            return 2;
+            return schemaVersion.VersionNumber;
+        }
+
+        async private Task<int> UpdateSchemaToVersion_3()
+        {
+            await Database.ExecuteSqlRawAsync("ALTER TABLE FilmExposures ADD COLUMN [Latitude] real null;");
+            await Database.ExecuteSqlRawAsync("ALTER TABLE FilmExposures ADD COLUMN [Longitude] real null;");
+            
+            var schemaVersion = SchemaVersions.FirstOrDefault();
+            schemaVersion.VersionNumber = 3;
+            SchemaVersions.Update(schemaVersion);
+            await SaveChangesAsync();
+
+            return schemaVersion.VersionNumber;
         }
     }
 }

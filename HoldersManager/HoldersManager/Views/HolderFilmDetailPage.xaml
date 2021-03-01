@@ -2,7 +2,21 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:HoldersManager.Components"
+             xmlns:sfbuttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              x:Class="HoldersManager.Views.HolderFilmDetailPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <OnPlatform x:TypeArguments="x:String" x:Key="FontIcon">
+                <On Platform="Android" Value="HoldersManager.ttf#HoldersManager" />
+                <On Platform="iOS" Value="Sync FontIcons" />
+                <On Platform="UWP" Value="Sync FontIcons.ttf#Sync FontIcons"/>
+            </OnPlatform>
+            <FontImageSource x:Key="Edit_Icon"
+                             FontFamily="{StaticResource FontIcon}" Size="14" 
+                             Glyph="&#xe703;" 
+                             Color="White" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.ToolbarItems>
         
         <ToolbarItem Text="Exposure" Command="{Binding AddExposureCommand}"/>
@@ -13,9 +27,21 @@
         <StackLayout>
             <Label Text="Infos" FontAttributes="Bold"/>
             <StackLayout Orientation="Horizontal">
-                <Label Text="Film type :" Style="{DynamicResource ListItemTextStyle}" />
-                <Label Text="{Binding FilmType.Name}" FontAttributes="Bold" Style="{DynamicResource ListItemTextStyle}" />
-                <Button Text="Edit Film"></Button>
+                <Label Text="Film type :" Style="{DynamicResource ListItemTextStyle}" VerticalOptions="Center"/>
+                <Label Text="{Binding FilmType.Name}" FontAttributes="Bold" Style="{DynamicResource ListItemTextStyle}" VerticalOptions="Center"/>
+                <sfbuttons:SfButton Margin="0"
+                                    ShowIcon="True"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    ImageSource="{StaticResource Edit_Icon}"
+                                    ImageAlignment="End"
+                                    BackgroundColor="Green"
+                                    CornerRadius="4"
+                                    Text="Edit"
+                                    >
+                    
+                </sfbuttons:SfButton>
+                
             </StackLayout>
             <Label Text="{Binding Film.Comments}" FontAttributes="Bold" Style="{DynamicResource ListItemTextStyle}" />
             <Button Text="Load" Command="{Binding LoadCommand}" IsVisible="{Binding IsNotLoaded, Mode=TwoWay}"/>
@@ -46,12 +72,12 @@
                                         </StackLayout>
                                         <StackLayout Orientation="Horizontal">
                                             <Label Text="Aperture :" Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                            <Label Text="{Binding ExposureDateTime}" 
+                                            <Label Text="{Binding Aperture}" 
                                             Style="{DynamicResource ListItemDetailTextStyle}"/>
                                         </StackLayout>
                                         <StackLayout Orientation="Horizontal">
                                             <Label Text="Exposure time :" Style="{DynamicResource ListItemDetailTextStyle}"/>
-                                            <Label Text="{Binding ExposureDateTime}" 
+                                            <Label Text="{Binding Exposure}" 
                                             Style="{DynamicResource ListItemDetailTextStyle}"/>
                                             <Label Text="{Binding ExposureUnit.Name}" 
                                             Style="{DynamicResource ListItemDetailTextStyle}"/>
